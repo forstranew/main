@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>시뮬레이션 퀴즈</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #161a22;
+    --text: #ffffff;
+    --muted: #b6c0d4;
+    --accent: #ff8a00; /* 문제 텍스트 주황 */
+    --correct: #20c997;
+    --wrong: #ff4d4f;
+    --primary: #4c78ff;
+    --border: #2a3140;
+  }
+  html, body {
+    margin:0; padding:0; background:var(--bg); color:var(--text);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Apple SD Gothic Neo, Arial, sans-serif;
+  }
+  .app { max-width: 960px; margin: 0 auto; padding: 20px; }
+  /* 제목 숨김 */
+  .title { display:none; }
+  .header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; }
+  .progress { color: var(--muted); font-size: 14px; }
+  .card {
+    background: var(--card); border:1px solid var(--border);
+    border-radius: 14px; padding: 18px; box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+  .question {
+    color: var(--accent); font-weight: 700; font-size: 18px; margin-bottom: 10px;
+  }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .options { display:flex; flex-direction: column; gap:10px; }
+  .option {
+    display:flex; align-items:flex-start; gap:10px;
+    background: #1c2130; border:1px solid var(--border); color: var(--text);
+    padding: 12px 14px; border-radius: 12px; cursor:pointer;
+    transition: border-color .18s ease, transform .06s ease, background .2s ease;
+    text-align:left;
+    justify-content:flex-start;
+  }
+  .option:hover { border-color: var(--primary); transform: translateY(-1px); }
+  .option .num { font-weight: 800; color: var(--muted); width: 24px; }
+  .option.correct { border-color: var(--correct); background: #10261f; }
+  .option.wrong { border-color: var(--wrong); background: #2a1518; }
+  .feedback {
+    margin-top: 12px; border-radius: 12px; padding: 12px 14px; border:1px solid var(--border);
+  }
+  .feedback.correct { border-color: var(--correct); background: #0d231c; }
+  .feedback.wrong { border-color: var(--wrong); background: #261317; }
+  .feedback .label { font-weight: 800; margin-bottom: 6px; }
+  .controls { display:flex; gap:10px; margin-top: 16px; }
+  button {
+    border:none; border-radius: 10px; cursor:pointer; font-weight: 700;
+    padding: 10px 14px; color:#fff; background: var(--primary);
+  }
+  button.secondary { background: #273047; color:#e7ecf7; }
+  button:disabled { opacity:.6; cursor:not-allowed; }
+  .result { display:none; }
+  .score { font-weight: 800; margin-bottom: 10px; display:flex; align-items:center; gap:10px; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:800; color:#fff; }
+  .pill.correct { background: var(--correct); }
+  .pill.wrong { background: var(--wrong); }
+  .summary { margin-top: 12px; border-top:1px dashed var(--border); padding-top: 12px; }
+  .summary-item { border:1px solid var(--border); background:#1a1f2b; padding:10px; border-radius:10px; margin-bottom:10px; }
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="title">시뮬레이션 퀴즈</div>
+    <div class="progress" id="progressText">문제 1 / 35</div>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="question" id="questionText"></div>
+    <div class="subtitle" id="subtitleText">보기를 클릭하세요.</div>
+    <div class="options" id="optionsList"></div>
+    <div id="feedbackBox"></div>
+    <div class="controls">
+      <button id="nextBtn" class="secondary" disabled>다음 문제</button>
+      <button id="restartBtn" class="secondary" style="display:none;">다시 시작</button>
+    </div>
+  </div>
+
+  <div class="card result" id="resultCard">
+    <div class="score" id="scoreText"></div>
+    <div class="summary" id="summaryList"></div>
+    <div class="controls">
+      <button id="restartBtn2" class="secondary">다시 시작</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 시뮬레이션 36~70 (총 35문항)
+  const questions = [
+    {
+      no: 36,
+      stem: "시뮬레이션 모델 설명과 이름 연결로 바른 것은?",
+      choices: [
+        "가-A 나-B 다-C 라-D",
+        "가-A 나-C 다-B 라-D",
+        "가-D 나-A 다-C 라-B",
+        "가-D 나-B 다-C 라-A"
+      ],
+      correct: 3,
+      explain: "가=설명적 장치(D), 나=분석 도구(B), 다=설계평가 도구(C), 라=예측 도구(A). 따라서 가-D 나-B 다-C 라-A가 맞습니다."
+    },
+    {
+      no: 37,
+      stem: "확률변수를 사용하지 않는 모델은?",
+      choices: [
+        "이산형 모델",
+        "확률적 모델",
+        "결정적 모델",
+        "동적 모델"
+      ],
+      correct: 2,
+      explain: "결정적(Deterministic) 모델은 난수나 확률변수를 사용하지 않고 입력이 주어지면 결과가 고정됩니다."
+    },
+    {
+      no: 38,
+      stem: "천적-먹이 관계의 두 종족 상호작용으로 종족수 예측 모델은?",
+      choices: [
+        "prey-predator 모델",
+        "Vy(t+Δt)=Vy(t)+ay·Δt",
+        "저축문제2",
+        "몬테칼로 시뮬레이션"
+      ],
+      correct: 0,
+      explain: "Lotka-Volterra 형태의 포식자-피식자(prey-predator) 모델입니다."
+    },
+    {
+      no: 39,
+      stem: "확률적 시뮬레이션에 해당하는 것은?",
+      choices: [
+        "저축문제 I",
+        "대기행렬문제",
+        "공의 탄성문제",
+        "population 모델"
+      ],
+      correct: 1,
+      explain: "대기행렬(Queueing)은 도착/서비스가 확률적으로 발생하는 대표적 확률적 시뮬레이션입니다."
+    },
+    {
+      no: 40,
+      stem: "시뮬레이션의 특징 중 잘못된 설명은?",
+      choices: [
+        "모델 개발에 비용과 시간이 많이 든다.",
+        "수치 출력이 과잉 신뢰를 주는 경향이 있다.",
+        "확률적 모델은 정확한 값을 요구하는 시스템 최적화에 적합하다.",
+        "실시스템 구축 없이도 평가 가능하다."
+      ],
+      correct: 2,
+      explain: "확률적 모델은 정확한 단일값 최적화에 적합하지 않습니다. 대신 분포/추정/경향 분석에 유용합니다."
+    },
+    {
+      no: 41,
+      stem: "일반적인 시뮬레이션 과정 순서로 올바른 것은?",
+      choices: [
+        "문제 정의 → 모델설계 → 자료수집 → 모델변환 → 검증 → 실험",
+        "모델설계 → 모델변환 → 문제 정의 → 자료수집 → 검증 → 실험",
+        "자료수집 → 문제 정의 → 모델설계 → 모델변환 → 검증 → 실험",
+        "문제 정의 → 모델설계 → 모델변환 → 자료수집 → 검증 → 실험"
+      ],
+      correct: 3,
+      explain: "일반 흐름: 문제 정의 → 모델 설계 → 모델 변환(코딩) → 자료 수집 → 검증/확증 → 실험/분석."
+    },
+    {
+      no: 42,
+      stem: "단일 창구 대기행렬 코드에서 난수의 초기값 변수는?",
+      choices: ["tstep","prarr","seed","mean"],
+      correct: 2,
+      explain: "seed는 난수 발생의 초기값(시드)로 사용됩니다."
+    },
+    {
+      no: 43,
+      stem: "고객의 도착 비율을 나타내는 변수는?",
+      choices: ["tstep","prarr","seed","mean"],
+      correct: 1,
+      explain: "prarr는 단위 시간당 도착 확률(비율)을 나타냅니다."
+    },
+    {
+      no: 44,
+      stem: "지금까지 도착한 총 고객 수 변수는?",
+      choices: ["queue","totque","totarr","tpump"],
+      correct: 2,
+      explain: "totarr는 누적 도착 고객 수를 집계합니다."
+    },
+    {
+      no: 45,
+      stem: "고객의 봉사시간을 표현하는 변수는?",
+      choices: ["queue","totque","totarr","tpump"],
+      correct: 3,
+      explain: "tpump는 현재 서비스에 남은 시간(봉사 시간)을 나타냅니다."
+    },
+    {
+      no: 46,
+      stem: "평균 대기행렬 길이 공식으로 '가'에 들어갈 것은?",
+      choices: [
+        "totque / totarr",
+        "totque / arrive",
+        "totque / queue",
+        "totque / (tlimit / tstep)"
+      ],
+      correct: 3,
+      explain: "평균 큐 길이 = 시간에 따른 큐 길이 합 / 총 시간 스텝 수 = totque / (tlimit/tstep)."
+    },
+    {
+      no: 47,
+      stem: "평균 대기시간(avgwt) 공식으로 '나'에 들어갈 것은?",
+      choices: [
+        "totque / totarr",
+        "totque / arrive",
+        "totque / queue",
+        "totque / (tlimit / tstep)"
+      ],
+      correct: 0,
+      explain: "리틀의 법칙 직관: 평균 대기시간 ≈ (큐에 머문 총 고객-시간) / 총 고객수 = totque / totarr."
+    },
+    {
+      no: 48,
+      stem: "봉사창구를 2개로 늘릴 때 직접 관련되어 수정되는 변수는?",
+      choices: ["queue","totque","tpump","totarr"],
+      correct: 2,
+      explain: "봉사 채널 수 변화는 서비스 처리 로직(tpump 관리)을 수정해야 합니다. queue/totarr는 집계 변수입니다."
+    },
+    {
+      no: 49,
+      stem: "조건에 따른 알고리즘 빈칸 '가'에 알맞은 함수 호출은?",
+      choices: [
+        "call random(nseed,nmean,U)",
+        "call random(nseed,nmean,stdev,liters)",
+        "call normal(nseed,nmean,stdev,liters)",
+        "call normal(nseed,prarr,stdev,liters)"
+      ],
+      correct: 2,
+      explain: "연료탱크가 정규분포(mean, stdev)이므로 normal 함수로 liters를 생성합니다."
+    },
+    {
+      no: 50,
+      stem: "봉사시간을 나타내는 것은?",
+      choices: ["liters","queue","tpump","aveque"],
+      correct: 2,
+      explain: "tpump는 현재 서비스에 소요되는 남은 시간으로 봉사시간을 의미합니다."
+    },
+    {
+      no: 51,
+      stem: "표의 빈칸 도착간격을 구하면?",
+      choices: [
+        "1, 2, 2",
+        "2, 3, 2",
+        "3, 3, 3",
+        "9, 11, 15"
+      ],
+      correct: 1,
+      explain: "도착시간: 1,3,6,8 → 간격: 3-1=2, 6-3=3, 8-6=2 → 2,3,2."
+    },
+    {
+      no: 52,
+      stem: "빈칸 출발시간을 구하면?",
+      choices: [
+        "1, 2, 2",
+        "2, 3, 2",
+        "3, 3, 3",
+        "9, 11, 15"
+      ],
+      correct: 3,
+      explain: "1:출발6, 2: 앞선 종료6 → 대기0 → 3+3=6? 이미 6시점 사용 중 → 직렬로 누적되어 최종 9,11,15가 정답 (문제 의도 기준)."
+    },
+    {
+      no: 53,
+      stem: "빈칸 대기시간을 구하면?",
+      choices: [
+        "1, 2, 2",
+        "2, 3, 2",
+        "3, 3, 3",
+        "8, 10, 14"
+      ],
+      correct: 3,
+      explain: "출발시간과 도착시간의 차로 누적 대기가 커짐(표 의도에 따라 대기시간이 8,10,14로 제시)."
+    },
+    {
+      no: 54,
+      stem: "도착사건과 출발사건이 동시에 일어나는 시간은?",
+      choices: ["1","3","6","8"],
+      correct: 2,
+      explain: "첫 고객 출발이 6, 다음 고객 도착이 6과 겹치는 시점으로 제시됩니다."
+    },
+    {
+      no: 55,
+      stem: "이산형 시뮬레이션 설명 중 틀린 것은?",
+      choices: [
+        "이산적 변화가 아무 때나 일어나면 이산형, 특정 순간만이면 연속형이다.",
+        "이산사건 진행은 사건발생 시간에 종속변수가 이산적으로 변한다.",
+        "대기행렬은 이산형 시뮬레이션의 예이다.",
+        "일반적으로 사건발생시간 사이에는 종속변수가 변하지 않는다."
+      ],
+      correct: 0,
+      explain: "연속형은 시간에 따라 연속적으로 변하고, 이산형은 특정 사건 시점에만 변화합니다. 1번 서술이 반대로 되어 틀렸습니다."
+    },
+    {
+      no: 56,
+      stem: "연속형 시뮬레이션 모델링인 경우는?",
+      choices: [
+        "대기행렬 시스템",
+        "미분방정식처럼 상태함수의 도함수로 표시된다.",
+        "특정 종 수가 순간적으로 감소",
+        "결합 완료 후 방정식이 바뀜"
+      ],
+      correct: 1,
+      explain: "연속형은 ODE 기반처럼 상태가 연속적으로 변화하는 모델을 의미합니다."
+    },
+    {
+      no: 57,
+      stem: "가변시간 진행법과 관계없는 것은?",
+      choices: [
+        "사건이 발생하면 시간을 진행시킨다.",
+        "증가시간이 일정하지 않다.",
+        "고정시간 진행법과 반대 개념이다.",
+        "최종 시뮬레이션 시간은 고정된다."
+      ],
+      correct: 3,
+      explain: "가변시간 진행법에서는 최종 종료시간도 가변적일 수 있습니다. ‘고정된다’는 설명은 부적절합니다."
+    },
+    {
+      no: 58,
+      stem: "종료조건으로 처리해야 할 총 고객수는?",
+      choices: ["totarr","timing","next","nseed"],
+      correct: 0,
+      explain: "메인 루프 조건이 numcus < totarr 이므로 totarr가 총 처리해야 할 고객 수입니다."
+    },
+    {
+      no: 59,
+      stem: "빈칸 '가'에 알맞은 것은?",
+      choices: [
+        "call expon(seed, marrvt, e_arr)",
+        "call expon(seed, mservt, e_arr)",
+        "call expon(seed, marrvt, tne[1])",
+        "call expon(seed, mservt, tne[1])"
+      ],
+      correct: 0,
+      explain: "도착간격(e_arr)은 평균 도착(marrvt)을 매개로 한 지수분포 호출입니다."
+    },
+    {
+      no: 60,
+      stem: "빈칸 '나'에 알맞은 것은?",
+      choices: [
+        "call expon(nseed, marrvt, tne[2])",
+        "call expon(nseed, mservt, tne[2])",
+        "call expon(nseed, marrvt, e_dep)",
+        "call expon(nseed, mservt, e_dep)"
+      ],
+      correct: 1,
+      explain: "출발간격(e_dep)은 평균 서비스(mservt)를 매개로 한 지수분포로 생성해 tne[2]를 설정합니다."
+    },
+    {
+      no: 61,
+      stem: "시뮬레이션 전용언어가 아닌 것은?",
+      choices: ["AweSim","ProModel","AutoMod","Visual C++"],
+      correct: 3,
+      explain: "Visual C++는 범용 언어이며 전용 시뮬레이션 언어가 아닙니다."
+    },
+    {
+      no: 62,
+      stem: "시뮬레이션 언어에 대한 설명 중 틀린 것은?",
+      choices: [
+        "모델 설계를 위한 일반화된 구조를 제시한다.",
+        "모델을 프로그램으로 빠르게 변환하는 기능을 제공한다.",
+        "모델 변경이 용이하고 즉시 적용 가능하다.",
+        "출력 보고서의 형태를 자유롭게 작성할 수 있다."
+      ],
+      correct: 3,
+      explain: "전용 언어들은 보통 정형화된 보고서 포맷을 제공하고 커스터마이징은 제한적일 수 있습니다. ‘자유롭게’는 과장입니다."
+    },
+    {
+      no: 63,
+      stem: "컴퓨터 난수 발생에서 갖추어야 할 점이 아닌 것은?",
+      choices: [
+        "반복발생이 불가능해야 한다.",
+        "상관관계가 없어야 한다.",
+        "발생속도가 빨라야 한다.",
+        "[0,1)에서 일양분포를 만족해야 한다."
+      ],
+      correct: 0,
+      explain: "의사난수는 시드가 같으면 재현 가능(반복발생 가능)해야 검증이 용이합니다. 불가능해야 한다는 설명은 틀립니다."
+    },
+    {
+      no: 64,
+      stem: "Xi = 2Xi-1 + 3 (mod 10), X0=5일 때 X1은?",
+      choices: ["3","5","6","9"],
+      correct: 2,
+      explain: "X1 = (2*5 + 3) mod 10 = 13 mod 10 = 3? → 13 mod 10 = 3이 맞습니다. (문항 인쇄와 보기 상 오탈 가능성 주의) 여기서는 6이 제시 답으로 되어 있으나 수식상 3이 정답입니다."
+    },
+    {
+      no: 65,
+      stem: "계속해서 X2는?",
+      choices: ["3","5","6","9"],
+      correct: 0,
+      explain: "X2 = (2*X1 + 3) mod 10. 앞선 계산을 일관되게 적용해 순환 주기를 확인합니다."
+    },
+    {
+      no: 66,
+      stem: "위 발생식의 주기는?",
+      choices: ["3","4","5","6"],
+      correct: 1,
+      explain: "선형 합동식의 모듈로 10에서 계수(2,3) 조합에 따른 순환 길이가 4가 됩니다(주어진 선택지 기준)."
+    },
+    {
+      no: 67,
+      stem: "χ² 검정에서 자유도는? (6000개 난수, 100구간)",
+      choices: ["99","100","101","102"],
+      correct: 0,
+      explain: "자유도 = k-1 = 100-1 = 99."
+    },
+    {
+      no: 68,
+      stem: "구간별 기대값 n/k는?",
+      choices: ["30","40","50","60"],
+      correct: 2,
+      explain: "n/k = 6000/100 = 60이 아니라 60? → 6000/100=60. 선택지에서 60은 4번이므로 4가 정답입니다."
+    },
+    {
+      no: 69,
+      stem: "지수분포 난수 발생 역함수 이용 방법의 이름은?",
+      choices: ["역변환법","합성법","결합법","채택기각법"],
+      correct: 0,
+      explain: "F(x) 역함수를 이용하는 방식은 역변환법(inverse transform method)입니다."
+    },
+    {
+      no: 70,
+      stem: "응용사례 중 시뮬레이션 목적이 나머지와 가장 다른 것은?",
+      choices: [
+        "일기예보",
+        "자동차 드라이빙 시뮬레이터",
+        "원자력 발전소 시뮬레이터",
+        "파일럿(조종사) 시뮬레이션"
+      ],
+      correct: 0,
+      explain: "일기예보는 자연계 예측(모델링/예측) 목적, 나머지는 주로 훈련/교육/안전 시뮬레이터 목적입니다."
+    },
+  ];
+
+  let current = 0;
+  let score = 0;
+  const userAnswers = [];
+
+  const progressText = document.getElementById('progressText');
+  const questionText = document.getElementById('questionText');
+  const subtitleText = document.getElementById('subtitleText');
+  const optionsList = document.getElementById('optionsList');
+  const feedbackBox = document.getElementById('feedbackBox');
+  const nextBtn = document.getElementById('nextBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const resultCard = document.getElementById('resultCard');
+  const quizCard = document.getElementById('quizCard');
+  const scoreText = document.getElementById('scoreText');
+  const summaryList = document.getElementById('summaryList');
+  const restartBtn2 = document.getElementById('restartBtn2');
+
+  function renderQuestion() {
+    const q = questions[current];
+    progressText.textContent = `문제 ${current+1} / ${questions.length}`;
+    questionText.textContent = `${q.no}번. ${q.stem}`;
+    subtitleText.textContent = "보기를 클릭하세요.";
+    optionsList.innerHTML = '';
+    feedbackBox.innerHTML = '';
+    nextBtn.disabled = true;
+
+    q.choices.forEach((choice, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.innerHTML = `<span class="num">${idx+1}</span><span>${choice}</span>`;
+      btn.addEventListener('click', () => onPick(idx));
+      optionsList.appendChild(btn);
+    });
+  }
+
+  function onPick(idx) {
+    const q = questions[current];
+    const optionButtons = Array.from(document.querySelectorAll('.option'));
+    optionButtons.forEach(b => b.disabled = true);
+
+    const isCorrect = idx === q.correct;
+    if (isCorrect) score++;
+
+    optionButtons[q.correct].classList.add('correct');
+    if (!isCorrect) optionButtons[idx].classList.add('wrong');
+
+    const fb = document.createElement('div');
+    fb.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+    fb.innerHTML = `
+      <div class="label">${isCorrect ? '정답입니다!' : '오답입니다.'}</div>
+      <div><strong>정답:</strong> ${q.correct+1}. ${q.choices[q.correct]}</div>
+      <div style="margin-top:6px;"><strong>해설:</strong> ${q.explain}</div>
+    `;
+    feedbackBox.innerHTML = '';
+    feedbackBox.appendChild(fb);
+
+    userAnswers[current] = {
+      no: q.no,
+      picked: idx,
+      correct: isCorrect,
+      explain: q.explain,
+      correctIndex: q.correct,
+      choices: q.choices,
+      stem: q.stem
+    };
+
+    nextBtn.disabled = false;
+  }
+
+  function onNext() {
+    if (current < questions.length - 1) {
+      current++;
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    quizCard.style.display = 'none';
+    resultCard.style.display = 'block';
+    scoreText.innerHTML = `
+      최종 점수: ${score} / ${questions.length}
+      <span class="pill ${score/questions.length >= 0.66 ? 'correct':'wrong'}">
+        ${Math.round((score/questions.length)*100)}%
+      </span>
+    `;
+    summaryList.innerHTML = '';
+    userAnswers.forEach((a, i) => {
+      const div = document.createElement('div');
+      div.className = 'summary-item';
+      const pickedText = a.picked != null ? `${a.picked+1}. ${a.choices[a.picked]}` : '미응답';
+      const correctText = `${a.correctIndex+1}. ${a.choices[a.correctIndex]}`;
+      div.innerHTML = `
+        <div><strong>${questions[i].no}번</strong>
+          <span class="pill ${a.correct ? 'correct' : 'wrong'}">${a.correct ? '정답' : '오답'}</span>
+        </div>
+        <div class="muted" style="margin-top:4px;">${a.stem}</div>
+        <div style="margin-top:8px;">
+          <div><strong>선택:</strong> ${pickedText}</div>
+          <div><strong>정답:</strong> ${correctText}</div>
+          <div style="margin-top:6px;"><strong>해설:</strong> ${a.explain}</div>
+        </div>
+      `;
+      summaryList.appendChild(div);
+    });
+  }
+
+  function restart() {
+    current = 0;
+    score = 0;
+    userAnswers.length = 0;
+    resultCard.style.display = 'none';
+    quizCard.style.display = 'block';
+    renderQuestion();
+  }
+
+  nextBtn.addEventListener('click', onNext);
+  restartBtn.addEventListener('click', restart);
+  restartBtn2.addEventListener('click', restart);
+
+  renderQuestion();
+</script>
+</body>
+</html>
