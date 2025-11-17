@@ -2,188 +2,424 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSP 퀴즈</title>
     <style>
-        body {
-            font-family: 'Malgun Gothic', sans-serif;
-            background-color: #1e1e1e;
-            color: #ffffff;
-            padding: 30px;
-            line-height: 1.7;
+        /* 다크 모드 스타일 */
+        body { 
+            font-family: 'Arial', sans-serif; 
+            line-height: 1.6; 
+            padding: 20px; 
+            background-color: #1e1e1e; /* 어두운 배경 */
+            color: #f0f0f0; /* 밝은 기본 텍스트 */
         }
-        h1 {
-            text-align: center;
-            color: #ff9d00;
-            margin-bottom: 40px;
+        .quiz-container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: #252526; /* 컨테이너 배경 */
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
         }
-        .question {
-            margin-bottom: 35px;
-            text-align: left;
+        .question { 
+            margin-bottom: 25px; 
+            border-bottom: 1px solid #444; 
+            padding-bottom: 15px; 
         }
-        .q-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #ff9d00;
-            margin-bottom: 12px;
-        }
-        .options {
-            margin-left: 20px;
-        }
-        .option {
-            cursor: pointer;
-            padding: 10px 15px;
-            margin: 8px 0;
-            background-color: #2d2d2d;
-            border-radius: 8px;
-            transition: all 0.3s;
-            user-select: none;
-        }
-        .option:hover {
-            background-color: #3d3d3d;
-        }
-        .option.correct {
-            background-color: #0d5012;
-            color: #a8e6a8;
-            font-weight: bold;
-        }
-        .option.wrong {
-            background-color: #500d0d;
-            color: #e6a8a8;
-        }
-        .explanation {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #2d2d2d;
-            border-radius: 8px;
-            border-left: 5px solid #ff9d00;
-            display: none;
-            color: #e0e0e0;
-        }
-        .explanation.show {
-            display: block;
-        }
-        .answer-mark {
-            font-weight: bold;
+        .question h3 { 
+            color: #ff9900; /* 주황색 문제 제목 */
+            margin-top: 0; 
             font-size: 1.1em;
         }
-        .footer {
-            margin-top: 60px;
-            text-align: center;
-            color: #888;
+        .options button {
+            display: block; width: 100%; padding: 12px; margin-bottom: 10px;
+            background-color: #3c3c3c; /* 버튼 기본 배경 */
+            border: 1px solid #555; border-radius: 5px;
+            text-align: left; cursor: pointer; transition: background-color 0.3s, transform 0.1s;
+            color: #f0f0f0; /* 버튼 텍스트 색상 */
+        }
+        .options button:hover:enabled { 
+            background-color: #505050; 
+            transform: translateY(-1px);
+        }
+        .options button.correct { 
+            background-color: #28a745; /* 정답 (초록색) */
+            border-color: #218838; 
+            color: white; 
+            font-weight: bold; 
+        }
+        .options button.incorrect { 
+            background-color: #dc3545; /* 오답 (빨간색) */
+            border-color: #c82333; 
+            color: white; 
+            font-weight: bold; 
+        }
+        .explanation { 
+            margin-top: 10px; padding: 15px; 
+            background-color: #333333; /* 해설 배경 */
+            border-left: 5px solid #ff9900; 
+            border-radius: 5px; 
+            font-size: 0.95em; 
+            color: #ffffff; /* 해설 텍스트 (흰색) */
+            display: none; 
+        }
+        #results { 
+            margin-top: 30px; padding: 20px; 
+            border: 2px solid #ff9900; 
+            border-radius: 5px; 
+            text-align: center; 
+            background-color: #333333; 
+            font-size: 1.2em; 
+            font-weight: bold; 
+        }
+        #submitBtn { 
+            padding: 15px 30px; 
+            background-color: #007bff; /* 파란색 확인 버튼 */
+            color: white; border: none; border-radius: 5px; 
+            cursor: pointer; font-size: 1.1em; margin-top: 20px; 
+            transition: background-color 0.3s;
+        }
+        #submitBtn:hover { 
+            background-color: #0056b3; 
         }
     </style>
 </head>
 <body>
-    <h1>컴퓨터 구조 기출문제 상세 해설 (50제)</h1>
 
-    <!-- 문제 1 -->
-    <div class="question">
-        <div class="q-title">🔵 문제 1</div>
-        <p>다음 중 컴퓨터 명령어를 구성하는 연산 코드(OP code field)에 대한 설명으로 가장 적절한 것은?</p>
-        <div class="options">
-            <div class="option" data-correct="false">① 기억장치 번지 혹은 처리장치 레지스터를 선택하기 위한 필드</div>
-            <div class="option" data-correct="true">② 명령어가 수행할 연산을 지정하는 필드이다.</div>
-            <div class="option" data-correct="false">③ 명령어의 주소 지정 방식을 결정하는 필드이다.</div>
-            <div class="option" data-correct="false">④ 인터럽트 요청을 처리할 제어 필드이다.</div>
+<div class="quiz-container">
+    <div id="quiz">
         </div>
-        <div class="explanation">
-            <p class="answer-mark">✅ 정답: ②</p>
-            <p><strong>상세 해설:</strong><br>
-            명령어는 크게 <strong>연산 코드(Opcode)</strong>와 <strong>오퍼랜드(Operand)</strong>로 나뉩니다.<br>
-            Opcode 필드는 CPU가 <strong>어떤 연산을 수행해야 하는지</strong>를 명시합니다. 예: ADD, SUB, LOAD, STORE, JMP 등.<br>
-            나머지 필드는 주소 부분이나 모드 비트 등에 해당하며, Opcode가 아닙니다.</p>
-        </div>
-    </div>
+    <button id="submitBtn" onclick="calculateScore()">결과 확인</button>
+    <div id="results" style="display: none;"></div>
+</div>
 
-    <!-- 문제 2 -->
-    <div class="question">
-        <div class="q-title">🔵 문제 2</div>
-        <p>다음 컴퓨터 명령어에 관한 설명으로 적절한 것은?</p>
-        <div class="options">
-            <div class="option" data-correct="false">① 2-주소 컴퓨터 명령어이다.</div>
-            <div class="option" data-correct="false">② 데이터 전송을 위한 컴퓨터 명령어이다.</div>
-            <div class="option" data-correct="true">③ 컴퓨터의 내부 구조로 볼 때 누산기를 이용하는 컴퓨터 명령어이다.</div>
-            <div class="option" data-correct="false">④ 컴퓨터의 내부 구조로 볼 때 다중 레지스터를 이용하는 컴퓨터 명령어이다.</div>
-        </div>
-        <div class="explanation">
-            <p class="answer-mark">✅ 정답: ③</p>
-            <p><strong>상세 해설:</strong><br>
-            주어진 프로그램(LOAD A, ADD B 등)은 명시적인 피연산자가 하나만 보이고, 나머지 하나는 누산기(AC)가 암묵적으로 사용됩니다.<br>
-            → 이는 전형적인 <strong>1-주소 명령어 형식</strong>(누산기 기반 아키텍처)입니다.<br>
-            2-주소 방식은 두 개의 명시적 주소를 가지며, 다중 레지스터 방식은 범용 레지스터를 여러 개 사용합니다.</p>
-        </div>
-    </div>
+<script>
+const quizData = [
+    {
+        q: "16. JSP 언어(또는 기술)에 관한 설명으로 올바른 것은?",
+        options: ["C 언어에 기반을 둔 웹 프로그래밍 기술이다.", "동적 웹 문서를 만들기 위해 서버에서 실행된다.", "플랫폼에 종속적인 면이 강하다.", "서버와 클라이언트 간 데이터 통신 방법에 관한 규약이다."],
+        answer: 1, 
+        explanation: "JSP(Java Server Pages)는 서버에서 실행되어 동적 웹 문서를 생성하는 기술입니다."
+    },
+    {
+        q: "17. HTTP 응답 메시지에 포함되는 정보가 아닌 것은?",
+        options: ["응답 코드", "쿠키", "세션", "클라이언트가 요청한 웹 문서"],
+        answer: 2,
+        explanation: "세션(Session)은 서버 측에서 관리하는 사용자 상태 정보이며, 응답 메시지에 직접 포함되는 정보가 아닙니다."
+    },
+    {
+        q: "18. 다음 중 웹 컨테이너라고 불리는 것은?",
+        options: ["Apache", "Tomcat", "MySQL", "Eclipse"],
+        answer: 1,
+        explanation: "웹 컨테이너는 서블릿과 JSP를 실행하는 환경을 제공하는 서버 프로그램으로, Tomcat이 대표적입니다."
+    },
+    {
+        q: "19. 웹 프로젝트를 Tomcat에 배포할 때 어느 디렉터리에 저장해야 하는가?",
+        options: ["\[톰캣설치폴더]", "\[톰캣설치폴더]\\webapps", "\[톰캣설치폴더]\\WebContent", "\[ 설치플더] HelloJSP"],
+        answer: 1,
+        explanation: "웹 애플리케이션은 Tomcat의 'webapps' 디렉터리에 저장되어야 인식됩니다."
+    },
+    {
+        q: "20. 서블릿 클래스를 작성하는 작업과 무관한 메소드는 무엇인가?",
+        options: ["서블릿 생성자", "init()", "doGet()", "doPost()"],
+        answer: 0,
+        explanation: "서블릿의 생명주기는 init(), service(), destroy() 등으로 관리되며, 생성자를 직접 다루는 것은 무관합니다."
+    },
+    {
+        q: "21. JSP 페이지 실행 결과의 버퍼링에 관한 설명이다. 올바른 것은?",
+        options: ["응답을 클라이언트로 보내기 전에 버퍼에 기록하는 것이다.", "기본적으로 버퍼는 사용하지 않도록 설정되어 있다.", "버퍼에 일단 기록된 내용은 수정할 수 없다.", "용량이 큰 버퍼를 사용하는 것이 작은 버퍼보다 항상 유리하다."],
+        answer: 0,
+        explanation: "버퍼링은 JSP 실행 결과를 클라이언트에게 보내기 전에 임시 저장소에 모아두는 과정입니다."
+    },
+    {
+        q: "22. 동적으로 생성되는 웹 문서의 MIME 타입과 charset을 설정하기 위해 JSP 페이지에서 사용하는 것은 무엇인가?",
+        options: ["page 지시어와 contentType 속성", "page 지시어와 import 속성", "include 지시어와 contentType 속성", "include 지시어와 import 속성"],
+        answer: 0,
+        explanation: "문서 타입과 문자셋은 page 지시어의 contentType 속성을 이용해 설정합니다."
+    },
+    {
+        q: "23. JSP 페이지에서 사용할 자바 클래스를 import하기 위해 올바르게 작성된 것은?",
+        options: ["<%@ include import=\"java.util.Date\" %>", "<%@ page import=\"java.util.Date\" %>", "<%@ page import=\"java.util.Date\" @%>", "<% import file \"java.util.Date\" %>"],
+        answer: 1,
+        explanation: "자바 클래스 임포트는 page 지시어의 import 속성을 사용합니다."
+    },
+    {
+        q: "24. 액션 태그란 JSP 페이지에서 특별한 기능을 제공하는 표준 태그이다. 다음 밑줄 친 부분에 공통으로 들어갈 단어는 무엇인가? <__ forward page=\"test.jsp\" /> <__ include page=\"test.jsp\" />",
+        options: ["jsp", "action", "page", "fn"],
+        answer: 0,
+        explanation: "JSP 표준 액션 태그는 <jsp:액션이름> 형태로 사용되므로 공통 단어는 'jsp'입니다."
+    },
+    {
+        q: "25. 다음과 같은 기능을 할 수 있는 내장 객체는 무엇인가? (응답 코드의 설정, 응답 헤더의 설정, 다른 페이지로의 포워딩, 쿠키의 추가)",
+        options: ["page", "request", "cookie", "response"],
+        answer: 3,
+        explanation: "응답(Response) 관련 기능을 수행하는 내장 객체는 response입니다."
+    },
+    {
+        q: "26. 아래의 요청에서 포함된 사용자 데이터를 읽기 위한 방법은? (http://localhost:8080/JSP/today.jsp?name=Kim)",
+        options: ["request.getCookies()", "request.getParameter(\"name\")", "response.getHeader(\"name\")", "response.getParameter(\"name\")"],
+        answer: 1,
+        explanation: "GET 방식의 요청 파라미터는 request.getParameter(\"name\")으로 읽습니다."
+    },
+    {
+        q: "27. include 지시어와 <jsp:include> 액션 태그에 관한 설명이다. 잘못된 것은?",
+        options: ["include 지시어는 파일의 소스나 텍스트를 포함시키기 위한 것이다.", "<jsp:include>는 페이지의 실행 결과를 포함시키기 위한 것이다.", "모두 모듈화된 JSP 페이지를 만들기 위한 방법이다.", "둘 모두 <jsp:param> 태그를 서브 요소로 사용하여 새로운 파일이나 페이지에 데이터를 전달할 수 있다."],
+        answer: 3,
+        explanation: "<jsp:include>만 <jsp:param>을 사용할 수 있으며, include 지시어는 정적 포함이라 파라미터 전달이 불가능합니다."
+    },
+    {
+        q: "28. 위에서 사용되지 않은 JSP 요소는 무엇인가? (제시된 코드 참고)",
+        options: ["스크립트릿", "액션 태그", "템플릿 데이터", "표현 언어"],
+        answer: 3,
+        explanation: "스크립트릿, 액션태그, 템플릿 데이터는 있지만, 표현 언어(EL: ${...})는 없습니다."
+    },
+    {
+        q: "29. 위에서 사용된 메소드인 flush()는 버퍼의 내용을 즉시 클라이언트에게 보낸다. 버퍼 관련 기능을 수행하는 JSP 내장 객체는 무엇인가?",
+        options: ["application", "buffer", "out", "request"],
+        answer: 2,
+        explanation: "flush() 메소드는 출력을 담당하는 내장 객체인 out 객체의 기능입니다."
+    },
+    {
+        q: "30. <jsp:forward> 액션이 실행되는 것에 유의하여 어떤 일이 일어나는지에 관해 올바르게 설명한 것은?",
+        options: ["JSP 페이지를 처리할 때 버퍼링을 사용하고 있지 않다.", "포워딩은 일어나지 않고 서버 측에서 예외가 발생한다.", "클라이언트에게 어떠한 결과도 전달되지 않는다.", "현재 페이지의 실행은 종료되고 새로운 페이지로의 이동이 일어난다."],
+        answer: 3,
+        explanation: "<jsp:forward>는 현재 페이지 실행을 멈추고 서버 내에서 다른 페이지로 제어권을 완전히 이동시킵니다."
+    },
+    {
+        q: "36. 다음이 설명하는 HTTP 요청 방식은 무엇인가? (원하는 방식으로 인코딩된 데이터를 요청 메시지의 몸체에 포함하여 전송하면서 자원을 요청하는 경우 사용됨)",
+        options: ["GET", "HEAD", "POST", "FTP"],
+        answer: 2,
+        explanation: "데이터를 요청 메시지의 몸체(Body)에 담아 전송하는 방식은 POST입니다."
+    },
+    {
+        q: "37. 'Eclipse를 이용한 웹 프로젝트의 배포'가 의미하는 것은?",
+        options: ["웹 프로젝트 폴더를 압축 파일로 만드는 것이다.", "개발한 웹 프로젝트를 웹 컨테이너에 내보내는 것이다.", "웹 컨테이너를 서버로 등록시키는 것이다.", "버퍼의 내용을 일차적으로 클라이언트에 보내는 것이다."],
+        answer: 1,
+        explanation: "배포(Deployment)는 개발된 프로젝트를 웹 컨테이너(서버)에서 실행할 수 있도록 준비하는 과정입니다."
+    },
+    {
+        q: "38. JSP 페이지에서 사용할 메소드나 변수를 선언하기 위한 태그는 다음 어느 것인가?",
+        options: ["<% ... %>", "<%! ... %>", "<%@ ... %>", "<%# ... %>"],
+        answer: 1,
+        explanation: "클래스의 멤버 변수나 메소드를 선언하는 태그는 선언 태그인 <%! ... %>입니다."
+    },
+    {
+        q: "39. 서블릿 클래스에서 doGet() 메서드의 인자는 무엇인가?",
+        options: ["request 1개", "response 1개", "request와 response", "인자가 없음"],
+        answer: 2,
+        explanation: "doGet()과 doPost()는 HttpServletRequest와 HttpServletResponse 객체를 인자로 받습니다."
+    },
+    {
+        q: "40. 다음은 버퍼가 차면 내용을 클라이언트로 보내고 버퍼를 비우라는 의미를 가진다. 밑줄 부분에 들어갈 단어는 무엇인가? (<%@ page ___ =\"true\" %>)",
+        options: ["flush", "autoFlush", "buffer", "autoBuffer"],
+        answer: 1,
+        explanation: "버퍼가 찼을 때 자동(Auto)으로 플러시(Flush)할지 여부를 설정하는 속성은 autoFlush입니다."
+    },
+    {
+        q: "41. 다음 중 JSP의 내장 객체가 아닌 것은?",
+        options: ["request", "response", "out", "cookie"],
+        answer: 3,
+        explanation: "request, response, out 등 9가지가 내장 객체이며, cookie는 내장 객체가 아닙니다."
+    },
+    {
+        q: "42. including.jsp 페이지를 요청했을 때, 클라이언트의 브라우저에서 표시되는 결과는 무엇인가? (<jsp:include> 사용에 유의)",
+        options: ["including.jsp: 20 included.jsp: 1000 including.jsp: 20", "included.jsp: 1000 including.jsp: 20", "included.jsp: 1000 including.jsp: 1000", "including.jsp: 20 included.jsp: 1000 including.jsp: 1000"],
+        answer: 0,
+        explanation: "<jsp:include>는 페이지 영역 변수를 공유하지 않습니다. 포함 전 data:20, 포함된 페이지 출력: included.jsp: 1000, 포함 후 data: 20이 출력됩니다."
+    },
+    {
+        q: "43. Including.jsp와 included.jsp 페이지 사이에서 공유 수 없는 영역은 무엇인가?",
+        options: ["page", "request", "session", "application"],
+        answer: 0,
+        explanation: "page 영역은 현재 페이지 내에서만 유효하며, 다른 페이지와는 공유되지 않습니다."
+    },
+    {
+        q: "44. JSP 페이지의 모듈화를 위해 사용하는 방법이라고 할 수 없는 것은?",
+        options: ["page 지시어", "include 지시어", "include 액션 태그", "prelude coda"],
+        answer: 0,
+        explanation: "page 지시어는 페이지의 속성을 설정하는 것이며, 모듈화는 include 지시어나 액션 태그를 통해 이루어집니다."
+    },
+    {
+        q: "45. 다음 중 <jsp:forward ... /> 액션의 처리를 바르게 설명한 것은?",
+        options: ["실행 결과의 맨 앞이나 맨 뒤에 자동으로 코드를 포함시킨다.", "속성으로 지정된 페이지의 실행 결과를 태그가 위치한 부분에 삽입시킨다.", "<jsp:include> 액션의 서브 요소로만 사용된다.", "페이지의 실행이 종료되고 새로운 페이지로의 이동이 일어난다."],
+        answer: 3,
+        explanation: "<jsp:forward>는 현재 페이지 실행을 멈추고 서버 내에서 다른 페이지로 제어권을 완전히 이동시킵니다."
+    },
+    {
+        q: "46. 쿠키의 유효 시간에 관한 설명으로 올바른 것은?",
+        options: ["클라이언트 컴퓨터에서 쿠키가 유지되는 기간이다.", "쿠키의 유효 시간이 음수라면 영구히 보관된다.", "클라이언트의 추가 요청이 없어도 쿠키가 보존되는 기간이다.", "출력 버퍼에서 쿠키 값을 변경할 수 있는 최대 시간이다."],
+        answer: 2,
+        explanation: "쿠키의 유효 시간은 setMaxAge()로 설정하며, 이 기간 동안 클라이언트 컴퓨터에 보존됩니다."
+    },
+    {
+        q: "47. 다음 코드의 의미를 바르게 설명한 것은? (response.addCookie(cookie);)",
+        options: ["쿠키를 만들어 요청 메시지의 헤더에 추가한다.", "쿠키를 만들어 응답 메시지의 헤더에 추가한다.", "쿠키를 만들어 응답 메시지의 몸체에 추가한다.", "클라이언트가 보낸 요청 메시지로부터 쿠키 값을 읽는다."],
+        answer: 1,
+        explanation: "response.addCookie()는 서버에서 클라이언트에게 응답을 보낼 때 HTTP 응답 헤더에 쿠키 정보를 담아 보냅니다."
+    },
+    {
+        q: "48. 세션을 사용하여 로그인 처리를 수행할 때 필요한 작업은 무엇인가?",
+        options: ["request 영역에 session 객체를 저장한다.", "session 객체의 타임아웃 시간을 수정한다.", "session 객체에 사용자 확인을 위한 속성을 추가한다.", "session 객체를 삭제한다."],
+        answer: 2,
+        explanation: "로그인 성공 시 사용자 정보를 세션 영역에 저장하여 유지합니다 (session.setAttribute())."
+    },
+    {
+        q: "49. 다음 중 세션이 종료되는 상황이 아닌 것은?",
+        options: ["클라이언트가 브라우저를 종료한다.", "세션의 유효시간 동안 클라이언트의 추가 요청이 없었다.", "JSP 페이지에서 session.invalidate() 실행하였다.", "JSP 페이지에서 session 객체에 저장된 모든 속성을 삭제하였다."],
+        answer: 3,
+        explanation: "세션 속성만 삭제하는 것은 세션 객체 자체를 종료시키지는 않습니다."
+    },
+    {
+        q: "50. 위에서 사용된 자바빈 객체에 관한 설명으로 잘못된 것은? (<jsp:useBean scope=\"request\" ...>)",
+        options: ["member.MemberInfo는 클래스의 이름에 해당한다.", "meminfo라는 이름의 객체가 존재하지 않으면 자바빈 객체를 생성한다.", "객체가 가진 속성 name과 age에 값을 지정하고 있다.", "객체의 사용 범위가 page이므로 해당 페이지에서만 사용할 수 있다."],
+        answer: 3,
+        explanation: "scope가 'request'로 지정되었으므로, 해당 요청이 유지되는 동안 유효합니다. page 영역이 아닙니다."
+    },
+    {
+        q: "51. 자바빈 객체의 이름을 출력하기 위해 밑줄 친 부분에 들어갈 적당한 내용은?",
+        options: ["<jsp:getProperty name=\"meminfo\" property=\"name\" />", "<jsp:getParameter id=\"meminfo\" property=\"name\" />", "<jsp:setProperty name=\"meminfo\" property=\"name\" />", "<out.print(meminfo.getName()); >"],
+        answer: 0,
+        explanation: "자바빈 객체의 속성 값(Getter)을 출력하는 표준 액션 태그는 <jsp:getProperty>입니다."
+    },
+    {
+        q: "52. 표현 언어(EL)의 사용에 관한 설명이다. 잘못된 것은?",
+        options: ["표현식을 대신하여 자주 사용된다.", "태그의 속성 값을 지정할 때 표현 언어 수식을 사용한다.", "표현 언어의 내장 객체와 JSP의 내장 객체는 다른 것이다.", "스크립트 요소의 내부에서 사용해야 한다."],
+        answer: 3,
+        explanation: "EL은 스크립트 요소(<% ... %>)의 내부가 아닌 외부(템플릿 텍스트, 태그 속성)에서 사용됩니다."
+    },
+    {
+        q: "53. <%= request.getParameter(\"name\") %>과 같은 의미를 가지는 표현 언어 수식을 내장 객체 param을 사용하여 표현하면 무엇인가?",
+        options: ["${ param.name }", "${ param[name] }", "$(param.name)", "$(param[name])"],
+        answer: 0,
+        explanation: "요청 파라미터에 접근하는 EL 내장 객체는 param이며, 접근은 ${ param.파라미터이름 } 형식입니다."
+    },
+    {
+        q: "54. 코어 라이브러리를 사용하려면 지시어를 추가해야 한다. 밑줄 친 (가)에 들어가야 할 내용은?",
+        options: ["<%@ import", "<%= page", "<%@ taglib", "<%# taglib"],
+        answer: 2,
+        explanation: "JSTL과 같은 태그 라이브러리를 선언할 때는 taglib 지시어를 페이지에 선언해야 합니다."
+    },
+    {
+        q: "55. 밑줄 친 (나)에는 흐름 제어를 위한 태그가 들어가야 한다. 적당한 것은 무엇인가? (맵을 반복하는 코드)",
+        options: ["c:choose", "c:forEach", "x:import", "x:forTokens"],
+        answer: 1,
+        explanation: "Map, List 등 컬렉션을 반복 처리하는 JSTL 태그는 <c:forEach>입니다."
+    },
+    {
+        q: "56. 다음 중 MySQL과 연동하는 JDBC 프로그래밍 작업을 위한 것은 무엇인가?",
+        options: ["Oracle 사이트에서 php-mysql 패키지를 다운받아 설치함", "Eclipse 사이트에서 Tomcat을 다운받아 설치함", "MySQL 사이트에서 Connector/J 다운받아 설치함", "MySQL 사이트에서 MySQL Shell을 다운받아 설치함"],
+        answer: 2,
+        explanation: "JDBC 연동을 위해 MySQL 서버에서 제공하는 자바 드라이버인 Connector/J(JDBC 드라이버)가 필요합니다."
+    },
+    {
+        q: "57. MVC 패턴을 적용하여 컨트롤러를 구현할 때 커맨드 패턴을 적용할 수 있다. 이때 커맨드와 관련된 정보를 별도의 설정 파일로 만든다면 어떤 장점이 있는가?",
+        options: ["새로운 커맨드를 추가하면 설정 파일을 다시 읽어야 한다.", "새로운 커맨드를 추가할 경우 소스 코드를 수정해야 한다.", "새로운 커맨드가 추가되도 설정 파일을 수정할 필요가 없다.", "새로운 커맨드가 추가되도 소스 코드를 수정할 필요가 없다."],
+        answer: 3,
+        explanation: "설정 파일을 이용하면 새로운 기능을 추가할 때 소스 코드(Java) 수정 없이 유연하게 대응할 수 있습니다."
+    },
+    {
+        q: "58. 다음은 회원정보 저장을 위한 자바빈 클래스이다. 속성 id의 getter 메서드와 setter 메서드를 올바르게 작성한 것은?",
+        options: ["public String getId() { return id; } / public void setId(String id) { id = id; }", "public void getId(String id) { this.id = id; } / public String setId() { return id; }", "public String getId() { return this; } / public void setId(String id) { this.id = id; }", "public String getId() { return id; } / public void setId(String id) { this.id = id; }"],
+        answer: 3,
+        explanation: "자바빈 규약에 따른 올바른 Getter/Setter 형식은 public String getId()와 public void setId(String id)입니다."
+    },
+    {
+        q: "59. 세션 영역에 회원 아이디를 'ID'라는 이름의 속성으로 저장하려 한다. 밑줄 친 (가)에 들어가야 할 내용은?",
+        options: ["session.getAttribute", "session.setAttribute", "cookie.getAttribute", "cookie.setAttribute"],
+        answer: 1,
+        explanation: "세션에 데이터를 저장하거나 추가할 때는 session.setAttribute(name, value)를 사용합니다."
+    },
+    {
+        q: "60. 로그인 처리가 끝난 후 다음 페이지로 이동하기 위해 밑줄 친 (나)에 들어가야 할 내용은?",
+        options: ["request.forward", "request.sendRedirect", "response.forward", "response.sendRedirect"],
+        answer: 3,
+        explanation: "로그인 처리 후에는 클라이언트에게 새로운 URL로 리다이렉트하도록 지시하는 response.sendRedirect()를 사용하는 것이 일반적입니다."
+    }
+];
 
-    <!-- 문제 3 -->
-    <div class="question">
-        <div class="q-title">🔵 문제 3</div>
-        <p>위 프로그램은 다음 중 어느 수식을 계산하는 것인가?</p>
-        <div class="options">
-            <div class="option" data-correct="false">① X = (A + B) × C</div>
-            <div class="option" data-correct="true">② X = C × (A + B)</div>
-            <div class="option" data-correct="false">③ X = (A + B) / C</div>
-            <div class="option" data-correct="false">④ X = (A × B) + C</div>
-        </div>
-        <div class="explanation">
-            <p class="answer-mark">✅ 정답: ②</p>
-            <p><strong>단계별 수행 과정:</strong><br>
-            1. LOAD A → AC = A<br>
-            2. ADD B → AC = A + B<br>
-            3. STORE X → M[X] = A + B<br>
-            4. LOAD C → AC = C<br>
-            5. MUL X → AC = C × (A + B)<br>
-            6. STORE X → X = C × (A + B)<br>
-            → 최종 결과는 <strong>C × (A + B)</strong>입니다.</p>
-        </div>
-    </div>
+let userAnswers = {};
 
-    <!-- 문제 4 ~ 35까지 동일한 형식으로 계속 작성 -->
-    <!-- (생략된 부분은 동일 패턴으로 추가) -->
-
-    <!-- 문제 35 예시 -->
-    <div class="question">
-        <div class="q-title">🔵 문제 35</div>
-        <p>다음 중 병렬 처리를 수행하는 시스템이 아닌 것은?</p>
-        <div class="options">
-            <div class="option" data-correct="false">① pipeline processor</div>
-            <div class="option" data-correct="false">② array processor</div>
-            <div class="option" data-correct="false">③ multiple processor</div>
-            <div class="option" data-correct="true">④ I/O processor</div>
-        </div>
-        <div class="explanation">
-            <p class="answer-mark">✅ 정답: ④</p>
-            <p><strong>상세 해설:</strong><br>
-            • Pipeline Processor: 명령어를 겹쳐서 실행 (명령어 수준 병렬성)<br>
-            • Array Processor: 벡터/배열 데이터를 동시에 처리 (SIMD)<br>
-            • Multiple Processor: 여러 CPU가 동시에 작업 (멀티프로세서)<br>
-            • I/O Processor: 입출력 전담 프로세서 → <strong>병렬 처리 목적이 아님</strong></p>
-        </div>
-    </div>
-
-    <div class="footer">
-        🎯 컴퓨터 구조 기출문제 상세 해설 완료<br>
-        GitHub 업로드용 HTML 파일
-    </div>
-
-    <script>
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', function() {
-                // 해당 문제의 모든 선택지 초기화
-                this.parentElement.querySelectorAll('.option').forEach(opt => {
-                    opt.classList.remove('correct', 'wrong');
-                });
-                
-                // 정답 여부 표시
-                if (this.getAttribute('data-correct') === 'true') {
-                    this.classList.add('correct');
-                } else {
-                    this.classList.add('wrong');
-                }
-                
-                // 해설 보이기
-                this.parentElement.nextElementSibling.classList.add('show');
-            });
+function loadQuiz() {
+    const quizDiv = document.getElementById('quiz');
+    quizData.forEach((question, qIndex) => {
+        const qElement = document.createElement('div');
+        qElement.className = 'question';
+        qElement.innerHTML = `<h3>${question.q}</h3><div class="options"></div><div class="explanation" id="exp-${qIndex}"></div>`;
+        
+        const optionsDiv = qElement.querySelector('.options');
+        const explanationDiv = qElement.querySelector('.explanation');
+        
+        question.options.forEach((option, oIndex) => {
+            const button = document.createElement('button');
+            button.textContent = `${oIndex + 1}. ${option}`;
+            button.onclick = () => checkAnswer(qIndex, oIndex, button);
+            optionsDiv.appendChild(button);
         });
-    </script>
+
+        explanationDiv.innerHTML = `<p><strong>정답: ${question.options[question.answer]}</strong></p><p><strong>해설:</strong> ${question.explanation}</p>`;
+        
+        quizDiv.appendChild(qElement);
+    });
+}
+
+function checkAnswer(qIndex, selectedIndex, button) {
+    const questionData = quizData[qIndex];
+    const isCorrect = (selectedIndex === questionData.answer);
+    
+    // 이전에 선택된 버튼의 스타일을 초기화하고 비활성화
+    const options = button.closest('.options').querySelectorAll('button');
+    options.forEach(btn => {
+        btn.classList.remove('correct', 'incorrect');
+        btn.disabled = true; 
+    });
+    
+    // 정답/오답 표시
+    if (isCorrect) {
+        button.classList.add('correct');
+    } else {
+        button.classList.add('incorrect');
+        // 오답 선택 시 정답도 표시
+        options[questionData.answer].classList.add('correct');
+    }
+    
+    // 해설 표시
+    document.getElementById(`exp-${qIndex}`).style.display = 'block';
+
+    // 사용자의 답변 저장
+    userAnswers[qIndex] = selectedIndex;
+}
+
+function calculateScore() {
+    let correctCount = 0;
+    const totalQuestions = quizData.length;
+
+    // 모든 문제를 풀었는지 확인 (옵션: 모든 문제를 풀도록 강제)
+    if (Object.keys(userAnswers).length < totalQuestions) {
+        alert("아직 풀지 않은 문제가 있습니다. 모든 문제를 풀거나 이미 푼 문제는 정답을 확인하세요.");
+        return;
+    }
+
+    quizData.forEach((question, qIndex) => {
+        if (userAnswers[qIndex] === question.answer) {
+            correctCount++;
+        }
+    });
+
+    const score = (correctCount / totalQuestions) * 100;
+    const resultsDiv = document.getElementById('results');
+    
+    resultsDiv.innerHTML = `
+        <h2>✨ 최종 스코어 ✨</h2>
+        <p>총 문제 수: ${totalQuestions}개</p>
+        <p>맞힌 문제 수: ${correctCount}개</p>
+        <p><strong>점수: ${score.toFixed(1)}점</strong></p>
+    `;
+    resultsDiv.style.display = 'block';
+    resultsDiv.scrollIntoView({ behavior: 'smooth' }); // 결과창으로 스크롤 이동
+}
+
+// 페이지 로드 시 퀴즈 로드
+window.onload = loadQuiz;
+</script>
+
 </body>
 </html>
