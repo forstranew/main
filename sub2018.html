@@ -2,51 +2,17 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>JSP & 웹 애플리케이션 문제 36~45</title>
+<title>JSP 문제 36~60</title>
 <style>
-  body {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-  }
-  .problem {
-    margin-bottom: 40px;
-  }
-  .question {
-    font-weight: bold;
-    color: orange;
-    margin-bottom: 10px;
-  }
-  .choices {
-    margin-left: 20px;
-    text-align: left;
-  }
-  .choice {
-    margin: 5px 0;
-    cursor: pointer;
-  }
-  .choice:hover {
-    text-decoration: underline;
-  }
-  .answer {
-    display: none;
-    color: #00ffcc;
-    margin-top: 5px;
-  }
-  .explanation {
-    display: none;
-    background-color: #333333;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-  }
-  hr {
-    border: 0;
-    border-top: 1px solid #555;
-    margin: 30px 0;
-  }
+body { background-color:#1a1a1a; color:#fff; font-family:Arial,sans-serif; padding:20px; line-height:1.6; }
+.problem { margin-bottom:40px; }
+.question { font-weight:bold; color:orange; margin-bottom:10px; }
+.choices { margin-left:20px; text-align:left; }
+.choice { margin:5px 0; cursor:pointer; padding:3px; border-radius:3px; }
+.choice:hover { background-color:#333; }
+.answer { display:none; color:#00ffcc; margin-top:5px; }
+.explanation { display:none; background-color:#333; padding:10px; margin-top:10px; border-radius:5px; }
+hr { border:0; border-top:1px solid #555; margin:30px 0; }
 </style>
 </head>
 <body>
@@ -56,15 +22,14 @@
   <div class="question">🔵 문제 36</div>
   JSP의 내장 객체인 response 객체가 제공하지 않는 작업은 무엇인가?
   <div class="choices">
-    <div class="choice" onclick="checkAnswer(this, false)">① getWriter() - 출력 스트림 객체를 리턴한다.</div>
-    <div class="choice" onclick="checkAnswer(this, true)">② getCookies() - 클라이언트가 보낸 쿠키 정보를 읽는다.</div>
-    <div class="choice" onclick="checkAnswer(this, false)">③ sendRedirect() - 요청을 다른 페이지로 이동시킨다.</div>
-    <div class="choice" onclick="checkAnswer(this, false)">④ setHeader() - 응답 헤더를 설정한다.</div>
+    <div class="choice" data-correct="false">① getWriter() - 출력 스트림 객체를 리턴한다.</div>
+    <div class="choice" data-correct="true">② getCookies() - 클라이언트가 보낸 쿠키 정보를 읽는다.</div>
+    <div class="choice" data-correct="false">③ sendRedirect() - 요청을 다른 페이지로 이동시킨다.</div>
+    <div class="choice" data-correct="false">④ setHeader() - 응답 헤더를 설정한다.</div>
   </div>
   <div class="answer">정답: ② getCookies()</div>
   <div class="explanation">
-    getCookies() 메서드는 request 객체에서 제공하며, response 객체에서는 사용하지 않습니다.  
-    response 객체는 클라이언트에게 보내는 응답을 관리하며, getWriter(), sendRedirect(), setHeader(), addCookie(), setContentType() 등 메서드를 제공합니다.
+    getCookies() 메서드는 request 객체에서 제공되며, response 객체에서는 사용할 수 없습니다. response 객체는 클라이언트에게 보낼 응답을 관리합니다.
   </div>
 </div>
 <hr>
@@ -74,14 +39,14 @@
   <div class="question">🔵 문제 37</div>
   '확인' 버튼을 누르면 POST 방식 요청이 process.jsp에 전달될 때, 빈 부분 ㄱ에 들어갈 내용은?
   <div class="choices">
-    <div class="choice" onclick="checkAnswer(this, false)">① page="process.jsp" method="post"</div>
-    <div class="choice" onclick="checkAnswer(this, false)">② page="process.jsp" type="post"</div>
-    <div class="choice" onclick="checkAnswer(this, true)">③ action="process.jsp" method="post"</div>
-    <div class="choice" onclick="checkAnswer(this, false)">④ action="process.jsp" type="post"</div>
+    <div class="choice" data-correct="false">① page="process.jsp" method="post"</div>
+    <div class="choice" data-correct="false">② page="process.jsp" type="post"</div>
+    <div class="choice" data-correct="true">③ action="process.jsp" method="post"</div>
+    <div class="choice" data-correct="false">④ action="process.jsp" type="post"</div>
   </div>
   <div class="answer">정답: ③ action="process.jsp" method="post"</div>
   <div class="explanation">
-    HTML form 태그에서 데이터를 전송할 대상은 action 속성, 전송 방식은 method 속성으로 지정합니다. page나 type은 존재하지 않는 속성입니다.
+    HTML form 태그에서 데이터를 전송할 대상은 action 속성, 전송 방식은 method 속성으로 지정합니다.
   </div>
 </div>
 <hr>
@@ -91,15 +56,14 @@
   <div class="question">🔵 문제 38</div>
   스크립트 요소의 문법에 맞게 빈 부분 ㄴ에 들어갈 내용은 무엇인가?
   <div class="choices">
-    <div class="choice" onclick="checkAnswer(this, true)">① &lt;%</div>
-    <div class="choice" onclick="checkAnswer(this, false)">② &lt;%=</div>
-    <div class="choice" onclick="checkAnswer(this, false)">③ &lt;%!</div>
-    <div class="choice" onclick="checkAnswer(this, false)">④ &lt;%@</div>
+    <div class="choice" data-correct="true">① &lt;%</div>
+    <div class="choice" data-correct="false">② &lt;%=</div>
+    <div class="choice" data-correct="false">③ &lt;%!</div>
+    <div class="choice" data-correct="false">④ &lt;%@</div>
   </div>
   <div class="answer">정답: ① &lt;%</div>
   <div class="explanation">
-    request.setCharacterEncoding()는 일반 자바 코드이므로 스크립트릿 &lt;% %&gt;을 사용합니다.  
-    표현식(&lt;%= %&gt;)은 값 출력용, 선언문(&lt;%! %&gt;)은 메서드/변수 선언용, 지시어(&lt;%@ %&gt;)는 페이지 설정용입니다.
+    request.setCharacterEncoding()는 일반 자바 코드이므로 스크립트릿 &lt;% %&gt;을 사용합니다.
   </div>
 </div>
 <hr>
@@ -107,8 +71,94 @@
 <!-- 문제 39 -->
 <div class="problem">
   <div class="question">🔵 문제 39</div>
-  process.jsp에서 수행되는 request.setCharacterEncoding()의 의미를 바르게 설명한 것은?
+  process.jsp에서 수행되는 request.setCharacterEncoding()의 의미는?
   <div class="choices">
-    <div class="choice" onclick="checkAnswer(this, false)">① 페이지를 파일로 저장할 때 사용할 charset을 지정</div>
-    <div class="choice" onclick="checkAnswer(this, false)">② request 영역에서 공유할 charset 속성을 지정</div>
-    <div class="choice" onclick="checkAnswer(this, true)">③ 요청 파라미터를 읽기 전에, 디코딩에 사용할 charset을 지정</div>
+    <div class="choice" data-correct="false">① 페이지를 파일로 저장할 때 사용할 charset을 지정</div>
+    <div class="choice" data-correct="false">② request 영역에서 공유할 charset 속성을 지정</div>
+    <div class="choice" data-correct="true">③ 요청 파라미터를 읽기 전에, 디코딩에 사용할 charset을 지정</div>
+    <div class="choice" data-correct="false">④ 응답 메시지를 만들 때 사용할 charset을 지정</div>
+  </div>
+  <div class="answer">정답: ③ 요청 파라미터 디코딩용 charset 지정</div>
+  <div class="explanation">
+    POST 방식 등으로 전송된 요청 파라미터를 읽기 전에 사용할 문자 인코딩을 지정합니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 40 -->
+<div class="problem">
+  <div class="question">🔵 문제 40</div>
+  아이디를 출력하기 위해 빈 부분 ㄷ에 들어갈 내용은?
+  <div class="choices">
+    <div class="choice" data-correct="false">① &lt;% request.getParameter("id"); %&gt;</div>
+    <div class="choice" data-correct="false">② &lt;% request.getParameter("name"); %&gt;</div>
+    <div class="choice" data-correct="true">③ &lt;%= request.getParameter("id") %&gt;</div>
+    <div class="choice" data-correct="false">④ &lt;%= request.getParameter("name") %&gt;</div>
+  </div>
+  <div class="answer">정답: ③ &lt;%= request.getParameter("id") %&gt;</div>
+  <div class="explanation">
+    값을 출력하려면 표현식 &lt;%= %&gt;을 사용하고, form에서 지정한 name="id"를 그대로 사용해야 합니다.
+  </div>
+</div>
+<hr>
+
+<!-- 여기서부터 문제 41~60까지 동일한 형식으로 추가 -->
+
+<!-- 문제 41 -->
+<div class="problem">
+  <div class="question">🔵 문제 41</div>
+  from.jsp에서 사용되지 않은 JSP 요소는 무엇인가?
+  <div class="choices">
+    <div class="choice" data-correct="false">① 스크립트릿</div>
+    <div class="choice" data-correct="false">② 액션 태그</div>
+    <div class="choice" data-correct="false">③ 지시어</div>
+    <div class="choice" data-correct="true">④ 표현식</div>
+  </div>
+  <div class="answer">정답: ④ 표현식</div>
+  <div class="explanation">
+    from.jsp에는 지시어, 스크립트릿, 액션 태그가 사용되었지만 표현식(<%= %>)은 사용되지 않았습니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 42 -->
+<div class="problem">
+  <div class="question">🔵 문제 42</div>
+  request 영역에 속성을 저장하여 데이터를 공유하려 할 때, 빈 부분 ㄱ에 들어갈 메서드의 이름은 무엇인가?
+  <div class="choices">
+    <div class="choice" data-correct="false">① getParameter</div>
+    <div class="choice" data-correct="false">② setParameter</div>
+    <div class="choice" data-correct="false">③ getAttribute</div>
+    <div class="choice" data-correct="true">④ setAttribute</div>
+  </div>
+  <div class="answer">정답: ④ setAttribute</div>
+  <div class="explanation">
+    request.setAttribute()는 request 객체 영역에 속성을 저장할 때 사용합니다. forward/include 시에도 공유됩니다.
+  </div>
+</div>
+<hr>
+
+<!-- 이후 문제 43~60 동일한 구조로 추가 -->
+
+<script>
+document.querySelectorAll('.choice').forEach(choice => {
+  choice.addEventListener('click', () => {
+    if(choice.dataset.correct === "true"){
+      choice.style.color = "#00ffcc";
+      choice.style.fontWeight = "bold";
+    } else {
+      choice.style.color = "#ff6666";
+      choice.style.textDecoration = "line-through";
+    }
+    const problem = choice.closest('.problem');
+    problem.querySelector('.answer').style.display = 'block';
+    problem.querySelector('.explanation').style.display = 'block';
+    problem.querySelectorAll('.choice').forEach(c=>{
+      c.style.pointerEvents = 'none';
+    });
+  });
+});
+</script>
+
+</body>
+</html>
