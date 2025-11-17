@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>JSP & 웹 애플리케이션 문제풀이 36~60</title>
+<title>JSP & 웹 애플리케이션 문제 36~45</title>
 <style>
   body {
     background-color: #1a1a1a;
@@ -23,11 +23,20 @@
     margin-left: 20px;
     text-align: left;
   }
+  .choice {
+    margin: 5px 0;
+    cursor: pointer;
+  }
+  .choice:hover {
+    text-decoration: underline;
+  }
   .answer {
+    display: none;
     color: #00ffcc;
     margin-top: 5px;
   }
   .explanation {
+    display: none;
     background-color: #333333;
     padding: 10px;
     margin-top: 10px;
@@ -47,16 +56,15 @@
   <div class="question">🔵 문제 36</div>
   JSP의 내장 객체인 response 객체가 제공하지 않는 작업은 무엇인가?
   <div class="choices">
-    ① getWriter() - 출력 스트림 객체를 리턴한다.<br>
-    ② getCookies() - 클라이언트가 보낸 쿠키 정보를 읽는다.<br>
-    ③ sendRedirect() - 요청을 다른 페이지로 이동시킨다.<br>
-    ④ setHeader() - 응답 헤더를 설정한다.
+    <div class="choice" onclick="checkAnswer(this, false)">① getWriter() - 출력 스트림 객체를 리턴한다.</div>
+    <div class="choice" onclick="checkAnswer(this, true)">② getCookies() - 클라이언트가 보낸 쿠키 정보를 읽는다.</div>
+    <div class="choice" onclick="checkAnswer(this, false)">③ sendRedirect() - 요청을 다른 페이지로 이동시킨다.</div>
+    <div class="choice" onclick="checkAnswer(this, false)">④ setHeader() - 응답 헤더를 설정한다.</div>
   </div>
-  <div class="answer">✅ 정답: ②</div>
+  <div class="answer">정답: ② getCookies()</div>
   <div class="explanation">
-    getCookies() 메서드는 request 객체에서 제공하는 기능으로, response 객체에서는 사용하지 않습니다.  
-    response 객체의 주요 메서드는 getWriter(), sendRedirect(), setHeader(), addCookie(), setContentType() 등이며,  
-    클라이언트로 응답을 보내거나 헤더 설정, 쿠키 추가와 관련된 기능을 수행합니다.
+    getCookies() 메서드는 request 객체에서 제공하며, response 객체에서는 사용하지 않습니다.  
+    response 객체는 클라이언트에게 보내는 응답을 관리하며, getWriter(), sendRedirect(), setHeader(), addCookie(), setContentType() 등 메서드를 제공합니다.
   </div>
 </div>
 <hr>
@@ -66,15 +74,14 @@
   <div class="question">🔵 문제 37</div>
   '확인' 버튼을 누르면 POST 방식 요청이 process.jsp에 전달될 때, 빈 부분 ㄱ에 들어갈 내용은?
   <div class="choices">
-    ① page="process.jsp" method="post"<br>
-    ② page="process.jsp" type="post"<br>
-    ③ action="process.jsp" method="post"<br>
-    ④ action="process.jsp" type="post"
+    <div class="choice" onclick="checkAnswer(this, false)">① page="process.jsp" method="post"</div>
+    <div class="choice" onclick="checkAnswer(this, false)">② page="process.jsp" type="post"</div>
+    <div class="choice" onclick="checkAnswer(this, true)">③ action="process.jsp" method="post"</div>
+    <div class="choice" onclick="checkAnswer(this, false)">④ action="process.jsp" type="post"</div>
   </div>
-  <div class="answer">✅ 정답: ③</div>
+  <div class="answer">정답: ③ action="process.jsp" method="post"</div>
   <div class="explanation">
-    HTML form 태그에서 데이터를 전송할 대상은 action 속성, 전송 방식은 method 속성으로 지정합니다.  
-    page나 type은 존재하지 않는 속성입니다.
+    HTML form 태그에서 데이터를 전송할 대상은 action 속성, 전송 방식은 method 속성으로 지정합니다. page나 type은 존재하지 않는 속성입니다.
   </div>
 </div>
 <hr>
@@ -84,12 +91,12 @@
   <div class="question">🔵 문제 38</div>
   스크립트 요소의 문법에 맞게 빈 부분 ㄴ에 들어갈 내용은 무엇인가?
   <div class="choices">
-    ① &lt;%<br>
-    ② &lt;%=<br>
-    ③ &lt;%!<br>
-    ④ &lt;%@
+    <div class="choice" onclick="checkAnswer(this, true)">① &lt;%</div>
+    <div class="choice" onclick="checkAnswer(this, false)">② &lt;%=</div>
+    <div class="choice" onclick="checkAnswer(this, false)">③ &lt;%!</div>
+    <div class="choice" onclick="checkAnswer(this, false)">④ &lt;%@</div>
   </div>
-  <div class="answer">✅ 정답: ①</div>
+  <div class="answer">정답: ① &lt;%</div>
   <div class="explanation">
     request.setCharacterEncoding()는 일반 자바 코드이므로 스크립트릿 &lt;% %&gt;을 사용합니다.  
     표현식(&lt;%= %&gt;)은 값 출력용, 선언문(&lt;%! %&gt;)은 메서드/변수 선언용, 지시어(&lt;%@ %&gt;)는 페이지 설정용입니다.
@@ -102,131 +109,6 @@
   <div class="question">🔵 문제 39</div>
   process.jsp에서 수행되는 request.setCharacterEncoding()의 의미를 바르게 설명한 것은?
   <div class="choices">
-    ① 페이지를 파일로 저장할 때 사용할 charset을 지정<br>
-    ② request 영역에서 공유할 charset 속성을 지정<br>
-    ③ 요청 파라미터를 읽기 전에, 디코딩에 사용할 charset을 지정<br>
-    ④ 응답 메시지를 만들 때 사용할 charset을 지정
-  </div>
-  <div class="answer">✅ 정답: ③</div>
-  <div class="explanation">
-    request.setCharacterEncoding()는 POST 방식 등으로 전송된 요청 파라미터를 읽기 전에 사용할 문자 인코딩을 지정합니다.  
-    반드시 getParameter() 호출 이전에 설정해야 한글 등 다국어 데이터가 깨지지 않습니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 40 -->
-<div class="problem">
-  <div class="question">🔵 문제 40</div>
-  아이디를 출력하기 위해 빈 부분 ㄷ에 들어갈 내용은 무엇인가?
-  <div class="choices">
-    ① &lt;% request.getParameter("id"); %&gt;<br>
-    ② &lt;% request.getParameter("name"); %&gt;<br>
-    ③ &lt;%= request.getParameter("id") %&gt;<br>
-    ④ &lt;%= request.getParameter("name") %&gt;
-  </div>
-  <div class="answer">✅ 정답: ③</div>
-  <div class="explanation">
-    값을 출력하려면 표현식 &lt;%= %&gt;을 사용하고, form에서 지정한 name="id"를 그대로 사용해야 합니다.  
-    스크립트릿(&lt;% %&gt;)은 값을 얻을 수 있지만 화면에 출력하지 않습니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 41 -->
-<div class="problem">
-  <div class="question">🔵 문제 41</div>
-  from.jsp에서 사용되지 않은 JSP 요소는 무엇인가?
-  <div class="choices">
-    ① 스크립트릿<br>
-    ② 액션 태그<br>
-    ③ 지시어<br>
-    ④ 표현식
-  </div>
-  <div class="answer">✅ 정답: ④</div>
-  <div class="explanation">
-    from.jsp에서는 지시어(&lt;%@ %&gt;), 스크립트릿(&lt;% %&gt;), 액션 태그(&lt;jsp:forward&gt;)는 사용되었으나,  
-    표현식(&lt;%= %&gt;)은 to.jsp에서만 사용됩니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 42 -->
-<div class="problem">
-  <div class="question">🔵 문제 42</div>
-  request 영역에 속성을 저장하여 데이터를 공유하려 할 때, 빈 부분 ㄱ에 들어갈 메서드는 무엇인가?
-  <div class="choices">
-    ① getParameter<br>
-    ② setParameter<br>
-    ③ getAttribute<br>
-    ④ setAttribute
-  </div>
-  <div class="answer">✅ 정답: ④</div>
-  <div class="explanation">
-    request.setAttribute("name", "a1")처럼 속성을 저장할 때는 setAttribute()를 사용합니다.  
-    Parameter는 클라이언트 전송 데이터, Attribute는 서버 내 저장 데이터로 구분됩니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 43 -->
-<div class="problem">
-  <div class="question">🔵 문제 43</div>
-  클라이언트가 from.jsp를 요청할 때 브라우저에서 보이는 결과는 무엇인가?
-  <div class="choices">
-    ① URL: localhost:8080/Chap07/from.jsp, 화면: "여기는 to.jsp 페이지 a1"<br>
-    ② URL: localhost:8080/Chap07/to.jsp, 화면: "여기는 to.jsp 페이지 p1"<br>
-    ③ URL: localhost:8080/Chap07/from.jsp, 화면: "여기는 from.jsp 페이지 - 포워딩 전"..."<br>
-    ④ URL: localhost:8080/Chap07/from.jsp, 화면: "여기는 from.jsp 페이지 - 포워딩 전"...""
-  </div>
-  <div class="answer">✅ 정답: ①</div>
-  <div class="explanation">
-    &lt;jsp:forward&gt;는 실행을 중단하고 다른 페이지로 이동시키므로,  
-    forward 이후 코드는 실행되지 않고, 버퍼 내용이 삭제됩니다.  
-    request.setAttribute("name","a1")로 전달된 속성은 to.jsp에서 읽혀 출력됩니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 44 -->
-<div class="problem">
-  <div class="question">🔵 문제 44</div>
-  from.jsp에서 사용된 &lt;jsp:param&gt; 태그에 관한 설명이다. 잘못된 것은?
-  <div class="choices">
-    ① &lt;jsp:param&gt; 태그는 &lt;jsp:include&gt;와 &lt;jsp:forward&gt;의 서브 요소로 사용<br>
-    ② 요청을 다른 페이지로 포워딩 시 원래 요청에 파라미터를 추가하기 위해 사용<br>
-    ③ 기존에 같은 이름의 파라미터가 존재하면 &lt;jsp:param&gt; 값이 우선<br>
-    ④ &lt;jsp:param&gt; 사용할 때 name과 value 속성은 생략 가능
-  </div>
-  <div class="answer">✅ 정답: ④</div>
-  <div class="explanation">
-    &lt;jsp:param&gt; 태그는 name과 value 속성이 필수입니다.  
-    생략할 수 없으며, 포워딩 또는 인클루드 시 파라미터 추가용으로 사용됩니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 45 -->
-<div class="problem">
-  <div class="question">🔵 문제 45</div>
-  from.jsp와 to.jsp 사이에서 공유될 수 없는 JSP 내장 객체는 무엇인가?
-  <div class="choices">
-    ① pageContext<br>
-    ② request<br>
-    ③ session<br>
-    ④ application
-  </div>
-  <div class="answer">✅ 정답: ①</div>
-  <div class="explanation">
-    pageContext는 현재 페이지에서만 유효하며, 다른 페이지와 공유되지 않습니다.  
-    request, session, application은 포워딩이나 세션, 애플리케이션 범위에서 공유가 가능합니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 46~60 -->
-<!-- 여기에 46~60번 문제도 동일한 구조로 계속 추가 -->
-<!-- 사용자가 제공한 문제 36~60 원문에 맞춰 계속 작성 가능 -->
-
-</body>
-</html>
+    <div class="choice" onclick="checkAnswer(this, false)">① 페이지를 파일로 저장할 때 사용할 charset을 지정</div>
+    <div class="choice" onclick="checkAnswer(this, false)">② request 영역에서 공유할 charset 속성을 지정</div>
+    <div class="choice" onclick="checkAnswer(this, true)">③ 요청 파라미터를 읽기 전에, 디코딩에 사용할 charset을 지정</div>
