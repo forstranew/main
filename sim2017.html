@@ -88,127 +88,224 @@
 </div>
 
 <script>
-  // 시뮬레이션 36~70 (총 35문항) — OCR 텍스트 반영
+  // 데이터: 36~70 (OCR 반영). 첫 문제부터 choices가 정확히 렌더되도록 점검.
   const questions = [
-    { no: 36, stem: "시뮬레이션 모델 설명과 이름 연결로 바른 것은?", choices: [
-      "가-A 나-B 다-C 라-D", "가-A 나-C 다-B 라-D", "가-D 나-A 다-C 라-B", "가-D 나-B 다-C 라-A"
-    ], correct: 3, explain: "가=설명적 장치(D), 나=분석 도구(B), 다=설계평가 도구(C), 라=예측 도구(A). 따라서 4번입니다." },
-
-    { no: 37, stem: "확률변수를 사용하지 않는 모델은?", choices: [
-      "이산형 모델", "확률적 모델", "결정적 모델", "동적 모델"
-    ], correct: 2, explain: "결정적(Deterministic) 모델은 난수·확률변수를 사용하지 않습니다." },
-
-    { no: 38, stem: "천적-먹이 관계의 상호작용 모델은?", choices: [
-      "prey-predator 모델", "Vy(t+Δt)=Vy(t)+ay·Δt", "저축문제2", "몬테칼로 시뮬레이션"
-    ], correct: 0, explain: "포식자-피식자(Lotka-Volterra) 모델을 의미합니다." },
-
-    { no: 39, stem: "확률적 시뮬레이션에 해당하는 것은?", choices: [
-      "저축문제 I", "대기행렬문제", "공의 탄성문제", "population 모델"
-    ], correct: 1, explain: "대기행렬은 도착/서비스의 확률적 발생을 다룹니다." },
-
-    { no: 40, stem: "시뮬레이션 특징 중 잘못된 것은?", choices: [
-      "모델 개발에 비용·시간이 많이 든다.", "수치 출력이 과잉 신뢰를 줄 수 있다.",
-      "확률적 모델은 정확한 값을 요구하는 최적화에 적합하다.", "실시스템 구축 없이도 평가 가능하다"
-    ], correct: 2, explain: "확률적 모델은 단일 정확값 최적화보다 분포·추정에 적합합니다." },
-
-    { no: 41, stem: "일반적인 시뮬레이션 과정 순서로 올바른 것은?", choices: [
-      "문제 정의 → 모델설계 → 자료수집 → 모델변환 → 검증 → 실험",
-      "모델설계 → 모델변환 → 문제 정의 → 자료수집 → 검증 → 실험",
-      "자료수집 → 문제 정의 → 모델설계 → 모델변환 → 검증 → 실험",
-      "문제 정의 → 모델설계 → 모델변환 → 자료수집 → 검증 → 실험"
-    ], correct: 3, explain: "문제 정의 → 모델 설계 → 변환 → 자료수집 → 검증 → 실험의 흐름이 일반적입니다." },
-
-    { no: 42, stem: "난수의 초기값 변수는?", choices: ["tstep","prarr","seed","mean"], correct: 2, explain: "seed가 난수 시드입니다." },
-    { no: 43, stem: "고객 도착 비율 변수는?", choices: ["tstep","prarr","seed","mean"], correct: 1, explain: "prarr가 도착 확률(비율)입니다." },
-    { no: 44, stem: "누적 도착 고객 수 변수는?", choices: ["queue","totque","totarr","tpump"], correct: 2, explain: "totarr는 누적 도착 수입니다." },
-    { no: 45, stem: "봉사시간(남은 서비스 시간) 변수는?", choices: ["queue","totque","totarr","tpump"], correct: 3, explain: "tpump가 남은 서비스 시간을 나타냅니다." },
-
-    { no: 46, stem: "평균 대기행렬 길이 공식 '가'는?", choices: [
-      "totque / totarr", "totque / arrive", "totque / queue", "totque / (tlimit / tstep)"
-    ], correct: 3, explain: "시간 평균 큐 길이 = totque / (시간스텝 수)입니다." },
-
-    { no: 47, stem: "평균 대기시간 공식 '나'는?", choices: [
-      "totque / totarr", "totque / arrive", "totque / queue", "totque / (tlimit/tstep)"
-    ], correct: 0, explain: "고객 1명당 평균 대기시간 ≈ totque / totarr (리틀의 법칙 직관)." },
-
-    { no: 48, stem: "봉사창구를 2개로 늘릴 때 직접 수정될 변수는?", choices: ["queue","totque","tpump","totarr"], correct: 2, explain: "서비스 채널 로직(tpump)이 변경됩니다." },
-
-    { no: 49, stem: "알고리즘 빈칸 '가'에 알맞은 것은?", choices: [
-      "call random(nseed,nmean,U)", "call random(nseed,nmean,stdev,liters)",
-      "call normal(nseed,nmean,stdev,liters)", "call normal(nseed,prarr,stdev,liters)"
-    ], correct: 2, explain: "연료량 liters는 정규분포(mean, stdev)이므로 normal 호출입니다." },
-
-    { no: 50, stem: "봉사시간을 나타내는 것은?", choices: ["liters","queue","tpump","aveque"], correct: 2, explain: "tpump가 현재 서비스에 소요되는 남은 시간입니다." },
-
-    { no: 51, stem: "표의 빈칸 도착간격은?", choices: [
-      "1, 2, 2", "2, 3, 2", "3, 3, 3", "9, 11, 15"
-    ], correct: 1, explain: "도착시간 1,3,6,8 → 간격 2,3,2가 됩니다." },
-
-    { no: 52, stem: "빈칸 출발시간은?", choices: [
-      "1, 2, 2", "2, 3, 2", "3, 3, 3", "9, 11, 15"
-    ], correct: 3, explain: "직렬 서비스 누적으로 주어진 해답은 9,11,15입니다(표 의도 기준)." },
-
-    { no: 53, stem: "빈칸 대기시간은?", choices: [
-      "1, 2, 2", "2, 3, 2", "3, 3, 3", "8, 10, 14"
-    ], correct: 3, explain: "출발–도착 시간 차로 누적 대기: 8,10,14(문항 제공 값 기준)." },
-
-    { no: 54, stem: "도착과 출발이 동시에 일어나는 시간은?", choices: ["1","3","6","8"], correct: 2, explain: "6 시점에 도착과 직전 서비스 종료가 겹칩니다." },
-
-    { no: 55, stem: "이산형 시뮬레이션 설명 중 틀린 것은?", choices: [
-      "아무 때나 이산 변화면 이산형, 명시된 순간만이면 연속형이다.",
-      "사건발생 시간에 종속변수가 이산적으로 변한다.",
-      "대기행렬은 이산형 시뮬레이션의 예이다.",
-      "사건발생시간 사이에는 종속변수가 변하지 않는다."
-    ], correct: 0, explain: "연속형은 시간에 따라 연속 변화, 이산형은 사건 시점에만 변화합니다. 1번은 반대로 서술했습니다." },
-
-    { no: 56, stem: "연속형 시뮬레이션 모델링인 경우는?", choices: [
-      "대기행렬 시스템", "상태함수의 도함수(미분방정식)로 표시", "특정 종 수의 순간 감소", "결합 전후 방정식 변경"
-    ], correct: 1, explain: "연속형은 ODE 기반처럼 연속적으로 상태가 변합니다." },
-
-    { no: 57, stem: "가변시간 진행법과 관계없는 것은?", choices: [
-      "사건 발생 시 시간을 진행", "증가시간이 일정하지 않다", "고정시간 진행법과 반대 개념", "최종 시뮬레이션 시간은 고정된다"
-    ], correct: 3, explain: "가변시간 진행에서는 종료시간도 유동적일 수 있어 ‘고정’이 아닙니다." },
-
-    { no: 58, stem: "종료조건으로 처리해야 할 총 고객수는?", choices: ["totarr","timing","next","nseed"], correct: 0, explain: "루프 조건이 numcus < totarr 이므로 totarr가 목표 처리 고객 수입니다." },
-
-    { no: 59, stem: "빈칸 '가'에 알맞은 것은?", choices: [
-      "call expon(seed, marrvt, e_arr)", "call expon(seed, mservt, e_arr)",
-      "call expon(seed, marrvt, tne[1])", "call expon(seed, mservt, tne[1])"
-    ], correct: 0, explain: "도착 간격 e_arr는 평균 도착(marrvt)을 매개로 하는 지수분포입니다." },
-
-    { no: 60, stem: "빈칸 '나'에 알맞은 것은?", choices: [
-      "call expon(nseed, marrvt, tne[2])", "call expon(nseed, mservt, tne[2])",
-      "call expon(nseed, marrvt, e_dep)", "call expon(nseed, mservt, e_dep)"
-    ], correct: 1, explain: "출발(서비스) 시간은 평균 서비스(mservt) 기반 지수분포로 tne[2]를 설정합니다." },
-
-    { no: 61, stem: "시뮬레이션 전용언어가 아닌 것은?", choices: [
-      "AweSim", "ProModel", "AutoMod", "Visual C++"
-    ], correct: 3, explain: "Visual C++는 범용 언어입니다." },
-
-    { no: 62, stem: "시뮬레이션 언어 설명 중 틀린 것은?", choices: [
-      "모델 설계를 위한 일반화된 구조 제시", "모델을 프로그램으로 신속 변환",
-      "모델 변경이 용이하고 즉시 적용", "출력 보고서 형태를 자유롭게 작성"
-    ], correct: 3, explain: "전용 언어는 보고서 포맷이 정형적일 수 있어 ‘자유롭게’는 과장입니다." },
-
-    { no: 63, stem: "컴퓨터 난수 발생에서 갖추어야 할 점이 아닌 것은?", choices: [
-      "반복발생이 불가능해야 한다.", "상관관계가 없어야 한다.", "발생속도가 빨라야 한다.", "[0,1)에서 일양분포를 만족"
-    ], correct: 0, explain: "의사난수는 재현 가능(같은 시드 → 같은 수열)이 검증에 유리합니다." },
-
-    { no: 64, stem: "Xi = 2Xi-1 + 3 (mod 10), X0=5일 때 X1은?", choices: ["3","5","6","9"], correct: 0, explain: "X1=(2*5+3) mod 10=13 mod 10=3." },
-
-    { no: 65, stem: "같은 식에서 X2는?", choices: ["3","5","6","9"], correct: 2, explain: "X2=(2*3+3) mod 10=9 mod 10=9? → 식 적용에 따라 수열이 이어집니다(제시 선택지 기준 6은 오타 가능성이 있으나 제공 값에 맞춰 채점합니다)." },
-
-    { no: 66, stem: "위 발생식의 주기는?", choices: ["3","4","5","6"], correct: 1, explain: "모듈로 10에서 계수(2,3) 조합으로 순환 길이가 4로 설정되어 있습니다(제시 선택지 기준)." },
-
-    { no: 67, stem: "χ² 검정 자유도? (6000개 난수, 100구간)", choices: ["99","100","101","102"], correct: 0, explain: "자유도 = k-1 = 99." },
-
-    { no: 68, stem: "구간별 기대값 n/k는?", choices: ["30","40","50","60"], correct: 3, explain: "6000/100=60 → 4번." },
-
-    { no: 69, stem: "지수분포 난수 발생 역함수 이용 방법 이름은?", choices: ["역변환법","합성법","결합법","채택기각법"], correct: 0, explain: "Inverse Transform Method(역변환법)입니다." },
-
-    { no: 70, stem: "응용사례 중 목적이 나머지와 가장 다른 것은?", choices: [
-      "일기예보", "자동차 드라이빙 시뮬레이터", "원자력 발전소 시뮬레이터", "파일럿 시뮬레이션"
-    ], correct: 0, explain: "일기예보는 자연계 ‘예측’ 목적, 나머지는 주로 ‘훈련/교육/안전’ 시뮬레이터 목적입니다." },
+    {
+      no: 36,
+      stem: "시뮬레이션 모델 설명과 이름 연결로 바른 것은?\n가. 시스템/문제 정의와 이해 제공 = D 설명적 장치\n나. 한계적 구성요소 결정 = B 분석 도구\n다. 해결방안 종합·평가 = C 설계평가 도구\n라. 미래 개발계획 예측 도움 = A 예측 도구",
+      choices: [
+        "가-A 나-B 다-C 라-D",
+        "가-A 나-C 다-B 라-D",
+        "가-D 나-A 다-C 라-B",
+        "가-D 나-B 다-C 라-A"
+      ],
+      correct: 3,
+      explain: "가=D, 나=B, 다=C, 라=A의 매칭이므로 4번이 맞습니다."
+    },
+    {
+      no: 37,
+      stem: "다음 시뮬레이션 모델에서 확률변수를 사용하지 않는 것은?",
+      choices: ["이산형 모델","확률적 모델","결정적 모델","동적 모델"],
+      correct: 2,
+      explain: "결정적 모델은 난수/확률 변수를 사용하지 않습니다."
+    },
+    {
+      no: 38,
+      stem: "천적-먹이 관계 두 종족 상호작용으로 종족수 예측 모델은?",
+      choices: ["prey-predator 모델","Vy(t+Δt)=Vy(t)+ay·Δt","저축문제2","몬테칼로 시뮬레이션"],
+      correct: 0,
+      explain: "포식자-피식자(prey-predator) 모델입니다."
+    },
+    {
+      no: 39,
+      stem: "확률적 시뮬레이션에 해당하는 것은?",
+      choices: ["저축문제I","대기행렬문제","공의탄성문제","population모델"],
+      correct: 1,
+      explain: "대기행렬은 확률적 도착/서비스를 다룹니다."
+    },
+    {
+      no: 40,
+      stem: "시뮬레이션 특징들 중 잘못된 설명은?",
+      choices: [
+        "시뮬레이션 모델은 개발 상 많은 비용과 시간을 요한다.",
+        "많은 수치 출력은 과잉 신뢰를 줄 수 있다.",
+        "확률적 모델은 정확한 값을 요구하는 시스템 최적화에 적합하다.",
+        "실시스템 구축 없이도 평가 가능하다."
+      ],
+      correct: 2,
+      explain: "확률적 모델은 단일 ‘정확 값’ 최적화보다 분포/추정용에 적합합니다."
+    },
+    {
+      no: 41,
+      stem: "일반적인 시뮬레이션 과정 순서로 올바른 것은?",
+      choices: [
+        "문제의 정의 → 모델설계 → 자료수집 → 모델변환 → 검증 → 실험",
+        "모델설계 → 모델변환 → 문제의 정의 → 자료수집 → 검증 → 실험",
+        "자료수집 → 문제의 정의 → 모델설계 → 모델변환 → 검증 → 실험",
+        "문제의 정의 → 모델설계 → 모델변환 → 자료수집 → 검증 → 실험"
+      ],
+      correct: 3,
+      explain: "문제 정의 → 설계 → 변환 → 자료수집 → 검증 → 실험의 흐름."
+    },
+    {
+      no: 42, stem: "난수의 초기값(시드) 변수는?", choices: ["tstep","prarr","seed","mean"], correct: 2, explain: "seed가 시드입니다." },
+    {
+      no: 43, stem: "고객 도착 비율 변수는?", choices: ["tstep","prarr","seed","mean"], correct: 1, explain: "prarr는 단위시간 도착 확률." },
+    {
+      no: 44, stem: "누적 도착 고객 수 변수는?", choices: ["queue","totque","totarr","tpump"], correct: 2, explain: "totarr는 누적 도착 수." },
+    {
+      no: 45, stem: "고객 봉사(서비스) 시간 변수는?", choices: ["queue","totque","totarr","tpump"], correct: 3, explain: "tpump가 남은 서비스 시간."
+    },
+    {
+      no: 46,
+      stem: "평균 대기행렬 길이 공식 '가'에 적당한 것은?",
+      choices: [
+        "totque / totarr",
+        "totque / arrive",
+        "totque / queue",
+        "totque / (tlimit / tstep)"
+      ],
+      correct: 3,
+      explain: "시간 평균 큐 길이 = totque / (총 시간 스텝 수)."
+    },
+    {
+      no: 47,
+      stem: "평균 대기시간 공식 '나'에 적당한 것은?",
+      choices: [
+        "totque / totarr",
+        "totque / arrive",
+        "totque / queue",
+        "totque / (tlimit/tstep)"
+      ],
+      correct: 0,
+      explain: "고객 1명당 평균 대기시간 ≈ totque / totarr."
+    },
+    {
+      no: 48,
+      stem: "봉사창구를 2개로 늘릴 때 직접 수정되는 변수는?",
+      choices: ["queue","totque","tpump","totarr"],
+      correct: 2,
+      explain: "서비스 처리 로직(tpump)을 다중 채널로 수정."
+    },
+    {
+      no: 49,
+      stem: "알고리즘 빈칸 '가'에 알맞은 것은?",
+      choices: [
+        "call random(nseed,nmean,U)",
+        "call random(nseed,nmean,stdev,liters)",
+        "call normal(nseed,nmean,stdev,liters)",
+        "call normal(nseed,prarr,stdev,liters)"
+      ],
+      correct: 2,
+      explain: "연료 탱크는 정규분포 → normal 호출."
+    },
+    {
+      no: 50,
+      stem: "봉사시간을 나타내는 것은?",
+      choices: ["liters","queue","tpump","aveque"],
+      correct: 2,
+      explain: "tpump가 남은 봉사시간."
+    },
+    {
+      no: 51,
+      stem: "빈칸 도착간격은?",
+      choices: ["1, 2, 2","2, 3, 2","3, 3, 3","9, 11, 15"],
+      correct: 1,
+      explain: "도착시간 1→3(+2), 3→6(+3), 6→8(+2)."
+    },
+    {
+      no: 52,
+      stem: "빈칸 출발시간은?",
+      choices: ["1, 2, 2","2, 3, 2","3, 3, 3","9, 11, 15"],
+      correct: 3,
+      explain: "서비스 직렬 누적으로 제시 답 9,11,15."
+    },
+    {
+      no: 53,
+      stem: "빈칸 대기시간은?",
+      choices: ["1, 2, 2","2, 3, 2","3, 3, 3","8, 10, 14"],
+      correct: 3,
+      explain: "표 의도에 따라 누적 대기시간 8,10,14."
+    },
+    { no: 54, stem: "도착과 출발이 동시에 일어나는 시간은?", choices: ["1","3","6","8"], correct: 2, explain: "6 시점 동시." },
+    {
+      no: 55,
+      stem: "이산형 시뮬레이션 설명 중 틀린 것은?",
+      choices: [
+        "아무 때나 이산 변화면 이산형, 명시된 순간만이면 연속형.",
+        "사건발생 시간에 종속변수가 이산적으로 변한다.",
+        "대기행렬은 이산형 시뮬레이션 예다.",
+        "사건발생시간 사이에는 종속변수가 변하지 않는다."
+      ],
+      correct: 0,
+      explain: "연속형은 시간에 따라 연속변화, 이산형은 사건 시점에만 변화."
+    },
+    {
+      no: 56,
+      stem: "연속형 시뮬레이션 모델링인 경우는?",
+      choices: ["대기행렬 시스템","미분방정식처럼 도함수로 표시","특정 종 수 순간 감소","결합 후 방정식 변경"],
+      correct: 1,
+      explain: "연속형은 ODE 기반처럼 상태가 연속적으로 변화."
+    },
+    {
+      no: 57,
+      stem: "가변시간 진행법과 관계없는 것은?",
+      choices: ["사건 발생 시 시간 진행","증가시간 일정하지 않음","고정시간 진행법과 반대","최종 시뮬레이션 시간 고정"],
+      correct: 3,
+      explain: "가변시간은 종료시간도 유동적일 수 있음."
+    },
+    { no: 58, stem: "종료조건으로 처리해야 할 총 고객수는?", choices: ["totarr","timing","next","nseed"], correct: 0, explain: "totarr 기준." },
+    {
+      no: 59,
+      stem: "빈칸 '가'에 알맞은 것은?",
+      choices: [
+        "call expon(seed, marrvt, e_arr)",
+        "call expon(seed, mservt, e_arr)",
+        "call expon(seed, marrvt, tne[1])",
+        "call expon(seed, mservt, tne[1])"
+      ],
+      correct: 0,
+      explain: "도착 간격 e_arr는 평균 도착 marrvt 기반 지수분포."
+    },
+    {
+      no: 60,
+      stem: "빈칸 '나'에 알맞은 것은?",
+      choices: [
+        "call expon(nseed, marrvt, tne[2])",
+        "call expon(nseed, mservt, tne[2])",
+        "call expon(nseed, marrvt, e_dep)",
+        "call expon(nseed, mservt, e_dep)"
+      ],
+      correct: 1,
+      explain: "출발(서비스) 시간은 mservt 기반 지수분포로 tne[2] 설정."
+    },
+    { no: 61, stem: "시뮬레이션 전용언어가 아닌 것은?", choices: ["AweSim","ProModel","AutoMod","Visual C++"], correct: 3, explain: "Visual C++는 범용 언어." },
+    {
+      no: 62,
+      stem: "시뮬레이션 언어 설명 중 틀린 것은?",
+      choices: [
+        "모델 설계 구조 제시",
+        "모델을 프로그램으로 신속 변환",
+        "모델 변경 즉시 적용",
+        "출력 보고서 형태를 자유롭게 작성"
+      ],
+      correct: 3,
+      explain: "보고서 커스터마이징은 제한적일 수 있어 ‘자유롭게’는 과장."
+    },
+    {
+      no: 63,
+      stem: "컴퓨터 난수 발생에서 갖추어야 할 점이 아닌 것은?",
+      choices: ["반복발생 불가능","상관관계 없어야 함","발생속도 빨라야 함","[0,1) 일양분포 만족"],
+      correct: 0,
+      explain: "의사난수는 재현 가능해야 검증이 용이."
+    },
+    { no: 64, stem: "Xi = 2Xi-1 + 3 (mod 10), X0=5일 때 X1은?", choices: ["3","5","6","9"], correct: 1-1, explain: "X1=(2*5+3)%10=13%10=3.", correct: 0 },
+    { no: 65, stem: "같은 식에서 X2는?", choices: ["3","5","6","9"], correct: 3, explain: "X2=(2*3+3)%10=9." },
+    { no: 66, stem: "위 발생식의 주기는?", choices: ["3","4","5","6"], correct: 1, explain: "선택지 기준 4." },
+    { no: 67, stem: "χ² 검정 자유도? (6000개 난수, 100구간)", choices: ["99","100","101","102"], correct: 0, explain: "k-1=99." },
+    { no: 68, stem: "구간별 기대값 n/k는?", choices: ["30","40","50","60"], correct: 3, explain: "6000/100=60." },
+    { no: 69, stem: "지수 확률변수 역함수 방법 이름은?", choices: ["역변환법","합성법","결합법","채택기각법"], correct: 0, explain: "Inverse Transform." },
+    { no: 70, stem: "목적이 나머지와 가장 다른 응용사례는?", choices: ["일기예보","자동차 드라이빙 시뮬레이터","원자력 발전소 시뮬레이터","파일럿 시뮬레이션"], correct: 0, explain: "일기예보는 예측, 나머지는 훈련/안전." }
   ];
 
   let current = 0;
@@ -228,19 +325,35 @@
   const summaryList = document.getElementById('summaryList');
   const restartBtn2 = document.getElementById('restartBtn2');
 
+  function safeText(el, txt) { el.textContent = txt ?? ""; }
+
   function renderQuestion() {
     const q = questions[current];
     progressText.textContent = `문제 ${current+1} / ${questions.length}`;
-    questionText.textContent = `${q.no}번. ${q.stem}`;
+    safeText(questionText, `${q.no}번. ${q.stem}`);
     subtitleText.textContent = "보기를 클릭하세요.";
     optionsList.innerHTML = '';
     feedbackBox.innerHTML = '';
     nextBtn.disabled = true;
 
+    if (!q || !Array.isArray(q.choices) || q.choices.length === 0) {
+      const warn = document.createElement('div');
+      warn.className = 'feedback wrong';
+      warn.innerHTML = '<div class="label">오류</div><div>이 문항의 보기 데이터가 비어있습니다.</div>';
+      feedbackBox.appendChild(warn);
+      return;
+    }
+
     q.choices.forEach((choice, idx) => {
       const btn = document.createElement('button');
       btn.className = 'option';
-      btn.innerHTML = `<span class="num">${idx+1}</span><span>${choice}</span>`;
+      const num = document.createElement('span');
+      num.className = 'num';
+      safeText(num, String(idx+1));
+      const text = document.createElement('span');
+      safeText(text, choice);
+      btn.appendChild(num);
+      btn.appendChild(text);
       btn.addEventListener('click', () => onPick(idx));
       optionsList.appendChild(btn);
     });
@@ -259,11 +372,18 @@
 
     const fb = document.createElement('div');
     fb.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
-    fb.innerHTML = `
-      <div class="label">${isCorrect ? '정답입니다!' : '오답입니다.'}</div>
-      <div><strong>정답:</strong> ${q.correct+1}. ${q.choices[q.correct]}</div>
-      <div style="margin-top:6px;"><strong>해설:</strong> ${q.explain}</div>
-    `;
+    const label = document.createElement('div');
+    label.className = 'label';
+    safeText(label, isCorrect ? '정답입니다!' : '오답입니다.');
+    const ans = document.createElement('div');
+    ans.innerHTML = `<strong>정답:</strong> ${q.correct+1}. ${q.choices[q.correct]}`;
+    const exp = document.createElement('div');
+    exp.style.marginTop = '6px';
+    exp.innerHTML = `<strong>해설:</strong> ${q.explain}`;
+    fb.appendChild(label);
+    fb.appendChild(ans);
+    fb.appendChild(exp);
+
     feedbackBox.innerHTML = '';
     feedbackBox.appendChild(fb);
 
@@ -324,6 +444,7 @@
   restartBtn.addEventListener('click', restart);
   restartBtn2.addEventListener('click', restart);
 
+  // 초기 렌더
   renderQuestion();
 </script>
 </body>
