@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f4;
+    color: #000;
+  }
+
+  .quiz {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  .question {
+    color: #FF8C00; /* 주황색 */
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .option {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #eaeaea;
+    text-align: left; /* 왼쪽 정렬 */
+  }
+
+  .option:hover {
+    background: #d4d4d4;
+  }
+
+  .result {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  .explanation {
+    margin-top: 5px;
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+  }
+
+  /* 다크모드 */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #121212;
+      color: #fff;
+    }
+    .quiz {
+      background: #1e1e1e;
+      box-shadow: 0 0 5px rgba(255,255,255,0.1);
+    }
+    .option {
+      background: #333333;
+      color: #ffffff;
+    }
+    .option:hover {
+      background: #444444;
+    }
+    .explanation {
+      background: #5a4d1c;
+      color: #fff;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- 31번 ~ 45번 문제 시작 -->
+
+<div class="quiz">
+  <div class="question">문제 31: Tomcat에 관한 설명으로 정확한 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① Java 프로그램의 개발과 실행을 위한 플랫폼</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 80% 정도가 C 언어로 구현된 웹 서버</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ 아파치에서 개발한 서블릿/JSP 컨테이너</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ JSP 개발에 특화된 오픈 소스의 통합 개발 환경</div>
+  <div class="result"></div>
+  <div class="explanation">Apache Tomcat은 아파치 소프트웨어 재단에서 개발한 서블릿/JSP 컨테이너입니다. <br>
+  각 선택지 설명: <br>
+  - ① Java 플랫폼: JDK (Java Development Kit) <br>
+  - ② C 언어 웹 서버: Apache HTTP Server <br>
+  - ③ 서블릿/JSP 컨테이너: Tomcat ✓ <br>
+  - ④ 통합 개발 환경: Eclipse, IntelliJ IDEA
+  </div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 32: 이클립스를 이용하여 웹 애플리케이션 Example을 개발하였고 이것을 war 파일로 배포하려고 한다. 배포할 위치로서 아래 빈 부분에 들어갈 폴더 이름은 무엇인가?<br>[톰캣설치폴더]\_____\Example.war</div>
+  <div class="option" onclick="checkAnswer(this,false)">① META-INF</div>
+  <div class="option" onclick="checkAnswer(this,false)">② WEB-INF</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ WebContent</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ webapps</div>
+  <div class="result"></div>
+  <div class="explanation">Tomcat에서 웹 애플리케이션을 배포할 때는 webapps 폴더에 WAR 파일을 저장합니다. <br>
+  예: [톰캣설치폴더]\webapps\Example.war <br>
+  - webapps: 웹 애플리케이션 배포 디렉터리 <br>
+  - META-INF: WAR 파일 내부 메타데이터 디렉터리 <br>
+  - WEB-INF: 웹 애플리케이션 설정 파일 디렉터리 <br>
+  - WebContent: Eclipse 프로젝트의 웹 리소스 폴더
+  </div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 33: HTTP 요청 방식 중 GET 방식에 관한 설명은 무엇인가?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① URL에 쿼리 문자열을 붙여 데이터를 전달한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 게시글과 같이 많은 양의 데이터를 보낼 때 적당하다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 암호와 같은 민감한 정보를 보낼 때 적당하다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ HTTP 요청 메시지의 몸체에 데이터를 포함시켜 전달한다.</div>
+  <div class="result"></div>
+  <div class="explanation">GET 방식은 URL에 쿼리 문자열을 붙여 데이터를 전달합니다. <br>
+  예: http://example.com/page.jsp?name=Kim&age=20 <br>
+  GET vs POST 비교: <br>
+  - GET: URL 노출, 길이 제한, 즐겨찾기 가능, 민감정보 부적합 <br>
+  - POST: 요청 본문에 데이터, 길이 제한 없음, URL 노출 안 됨, 민감정보 전송 적합
+  </div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 34: JSP 페이지에서 사용할 클래스를 가져오기(import) 위한 선언으로 올바른 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;% import java.util.Date; %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;%@ import file="java.util.Date" %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ &lt;%@ page import="java.util.Date" %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;%@ page import="java.utilDate" %&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">JSP에서 자바 클래스를 import하려면 page 지시어와 import 속성을 사용합니다. <br>
+  예: <%@ page import="java.util.Date" %>
+  </div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 35: JSP 페이지에서 특별한 기능을 수행하는 '표준 액션'을 사용하기 위한 문법은 다음 중 무엇인가?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;%@ 액션이름 속성="값" %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,true)">② &lt;jsp: 액션이름 속성="값" /&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ ${ 액션이름.속성.값 }</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;c: 액션이름 속성="값" /&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">JSP 표준 액션 태그는 <jsp:액션이름> 형식으로 사용합니다. <br>
+  예: <jsp:include page="header.jsp" />, <jsp:forward page="main.jsp" />, <jsp:useBean id="user" class="User" />, <jsp:getProperty name="user" property="name" />, <jsp:setProperty name="user" property="name" value="Kim" />
+  </div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 36: JSP의 내장 객체인 response 객체가 제공하지 않는 작업은 무엇인가?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① getWriter() - 출력 스트림 객체를 리턴한다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">② getCookies() - 클라이언트가 보낸 쿠키 정보를 읽는다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ sendRedirect() - 요청을 다른 페이지로 이동시킨다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ setHeader() - 응답 헤더를 설정한다.</div>
+  <div class="result"></div>
+  <div class="explanation">getCookies()는 request 객체의 메서드입니다. response 객체는 getWriter(), sendRedirect(), setHeader(), addCookie(), setContentType() 등을 제공합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 37: form.jsp에서 '확인' 버튼을 누르면 POST 방식 요청이 process.jsp에 전달될 때, form 태그의 빈칸 ㄱ에 들어갈 적당한 내용은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① page="process.jsp" method="post"</div>
+  <div class="option" onclick="checkAnswer(this,false)">② page="process.jsp" type="post"</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ action="process.jsp" method="post"</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ action="process.jsp" type="post"</div>
+  <div class="result"></div>
+  <div class="explanation">HTML form 태그 속성은 action과 method를 사용합니다. <br>예: &lt;form action="process.jsp" method="post"&gt;</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 38: process.jsp에서 request.setCharacterEncoding("euc-kr")를 호출하기 위해 사용된 빈칸 ㄴ에 들어갈 문법은?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① &lt;%</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;%=</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ &lt;%!</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;%@</div>
+  <div class="result"></div>
+  <div class="explanation">request.setCharacterEncoding()은 일반 자바 코드이므로 스크립트릿 &lt;% %&gt;을 사용합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 39: request.setCharacterEncoding()의 의미는?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 페이지를 파일로 저장할 때 사용할 charset을 지정</div>
+  <div class="option" onclick="checkAnswer(this,false)">② request 영역에서 공유할 charset 속성을 지정</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ 요청 파라미터를 읽기 전에, 디코딩에 사용할 charset을 지정</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 응답 메시지를 만들 때 사용할 charset을 지정</div>
+  <div class="result"></div>
+  <div class="explanation">request.setCharacterEncoding()은 클라이언트가 전송한 요청 파라미터를 읽을 때 사용할 문자 인코딩을 지정하며, 반드시 getParameter() 호출 전에 설정해야 합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 40: process.jsp에서 아이디를 출력하기 위해 빈칸 ㄷ에 들어갈 내용은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;% request.getParameter("id"); %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;% request.getParameter("name"); %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ &lt;%= request.getParameter("id") %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;%= request.getParameter("name") %&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">값을 출력하려면 표현식 &lt;%= %&gt;을 사용하고, 파라미터 이름은 form에서 지정한 "id"를 사용해야 합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 41: from.jsp에서 사용되지 않은 JSP 요소는 무엇인가?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 스크립트릿</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 액션 태그</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 지시어</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ 표현식</div>
+  <div class="result"></div>
+  <div class="explanation">from.jsp에서는 지시어, 스크립트릿, 액션 태그는 사용되었으나 표현식은 사용되지 않았습니다. (to.jsp에서는 있음)</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 42: request 영역에 속성을 저장할 때 빈칸 ㄱ에 들어갈 메서드는?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① getParameter</div>
+  <div class="option" onclick="checkAnswer(this,false)">② setParameter</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ getAttribute</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ setAttribute</div>
+  <div class="result"></div>
+  <div class="explanation">request.setAttribute()는 request 영역에 속성을 저장하여 forward/include 시 데이터 공유에 사용됩니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 43: 클라이언트가 from.jsp를 요청할 때 브라우저에서 보이는 결과는?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① URL: from.jsp, 화면: 여기는 to.jsp 페이지 a1</div>
+  <div class="option" onclick="checkAnswer(this,false)">② URL: to.jsp, 화면: 여기는 to.jsp 페이지 p1</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ URL: from.jsp, 화면: from.jsp 페이지 - 포워딩 전, to.jsp 페이지 a1, from.jsp 페이지 - 포워딩 후</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ URL: from.jsp, 화면: from.jsp 페이지 - 포워딩 전, to.jsp 페이지 p1, from.jsp 페이지 - 포워딩 후</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;jsp:forward&gt;는 현재 페이지 실행을 즉시 중단하고 to.jsp로 제어권을 넘깁니다. forward 이후의 코드는 실행되지 않습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 44: from.jsp에서 사용된 &lt;jsp:param&gt; 태그 설명 중 잘못된 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;jsp:param&gt;은 &lt;jsp:include&gt;와 &lt;jsp:forward&gt;의 서브 요소로 사용된다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 요청을 다른 페이지로 포워딩하거나 할 때, 원래 요청에 파라미터를 추가하기 위해 사용된다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 기존에 같은 이름의 파라미터가 존재하면 &lt;jsp:param&gt;에 지정된 값이 우선된다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ name과 value 속성은 생략 가능하다.</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;jsp:param&gt;의 name과 value 속성은 필수이며 생략할 수 없습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 45: from.jsp와 to.jsp 페이지 사이에서 공유될 수 없는 JSP 내장 객체는?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① pageContext</div>
+  <div class="option" onclick="checkAnswer(this,false)">② request</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ session</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ application</div>
+  <div class="result"></div>
+  <div class="explanation">pageContext는 현재 페이지에서만 유효하며, 다른 페이지와 공유되지 않습니다. request, session, application은 공유 가능합니다.</div>
+</div>
+
+<script>
+function checkAnswer(elem, isCorrect) {
+  const parent = elem.parentElement;
+  const result = parent.querySelector(".result");
+  const explanation = parent.querySelector(".explanation");
+  
+  if (isCorrect) {
+    result.textContent = "✅ 정답!";
+    result.style.color = "green";
+  } else {
+    result.textContent = "❌ 오답!";
+    result.style.color = "red";
+  }
+  
+  explanation.style.display = "block";
+}
+</script>
+
+</body>
+</html>
