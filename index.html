@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>JSP/웹 프로그래밍 퀴즈 36~60</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+  .quiz { margin-bottom: 25px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+  .question { color: #1E90FF; font-weight: bold; margin-bottom: 10px; }
+  .option { margin: 5px 0; padding: 8px; border-radius: 5px; cursor: pointer; background: #eaeaea; }
+  .option:hover { background: #d4d4d4; }
+  .result { margin-top: 10px; font-weight: bold; }
+  .explanation { margin-top: 5px; background: #fff3cd; padding: 10px; border-radius: 5px; display: none; }
+</style>
+</head>
+<body>
+
+<!-- 문제 36~60 모두 동일 구조로 추가 -->
+
+<div class="quiz">
+  <div class="question">문제 36: 다음이 설명하는 HTTP 요청 방식은 무엇인가?<br><small>원하는 방식으로 인코딩된 데이터를 요청 메시지의 몸체에 포함하여 전송하면서 자원을 요청하는 경우 사용됨</small></div>
+  <div class="option" onclick="checkAnswer(this,false)">① GET</div>
+  <div class="option" onclick="checkAnswer(this,false)">② HEAD</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ POST</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ FTP</div>
+  <div class="result"></div>
+  <div class="explanation">POST 방식은 데이터를 HTTP 요청 메시지의 본문(body)에 포함하여 전송하는 방식입니다. URL에 데이터가 노출되지 않으며, 대용량이나 민감한 정보 전송 시 사용됩니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 37: "Eclipse를 이용한 웹 프로젝트의 배포"가 의미하는 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 웹 프로젝트 폴더를 압축 파일로 만드는 것이다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">② 개발한 웹 프로젝트를 웹 컨테이너에 내보내는 것이다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 웹 컨테이너를 서버로 등록시키는 것이다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 버퍼의 내용을 일차적으로 클라이언트에 보내는 것이다.</div>
+  <div class="result"></div>
+  <div class="explanation">배포(Deploy)는 개발 완료된 웹 애플리케이션을 실행할 수 있도록 웹 컨테이너(Tomcat 등)에 전달하는 작업입니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 38: JSP 페이지에서 메소드나 변수를 선언하기 위한 태그는?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;% ... %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;%@ ... %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ &lt;%! ... %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;%# ... %&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;%! ... %&gt;는 JSP 페이지에서 멤버 변수나 메소드를 선언할 때 사용됩니다. 선언된 변수와 메소드는 서블릿 클래스의 멤버로 변환되어 모든 요청에서 공유됩니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 39: 서블릿 클래스에서 doGet() 메서드의 인자는 무엇인가?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① request 1개</div>
+  <div class="option" onclick="checkAnswer(this,false)">② response 1개</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ request와 response</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 인자가 없음</div>
+  <div class="result"></div>
+  <div class="explanation">doGet() 메서드는 HttpServletRequest와 HttpServletResponse 두 개의 인자를 받습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 40: 다음은 버퍼가 차면 내용을 클라이언트로 보내고 버퍼를 비우라는 의미입니다. 빈칸에 들어갈 단어는?<br>&lt;%@ page _____="true" %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">① flush</div>
+  <div class="option" onclick="checkAnswer(this,true)">② autoFlush</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ buffer</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ autoBuffer</div>
+  <div class="result"></div>
+  <div class="explanation">autoFlush 속성은 버퍼가 가득 찼을 때 자동으로 클라이언트로 내용을 전송하고 비울지를 설정합니다. true: 자동 flush, false: 예외 발생</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 41: 다음 중 JSP의 내장 객체가 아닌 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① request</div>
+  <div class="option" onclick="checkAnswer(this,false)">② response</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ out</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ cookie</div>
+  <div class="result"></div>
+  <div class="explanation">cookie는 JSP 내장 객체가 아니며, Cookie 클래스 객체로 생성하여 사용해야 합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 42: including.jsp 페이지를 요청했을 때 브라우저에 표시되는 결과는?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① included.jsp : 1000, including.jsp : 20</div>
+  <div class="option" onclick="checkAnswer(this,true)">② including.jsp : 20, included.jsp : 1000, including.jsp : 20</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ including.jsp : 20, included.jsp : 1000, including.jsp : 1000</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ including.jsp : 20, including.jsp : 1000</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;jsp:include&gt;는 동적 포함 방식으로, 포함된 페이지는 request 영역을 공유하지만 스코프는 독립적입니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 43: including.jsp와 included.jsp 페이지 사이에서 공유되는 영역은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① page</div>
+  <div class="option" onclick="checkAnswer(this,false)">② session</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ request</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ application</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;jsp:include&gt;로 포함된 페이지는 request 영역을 공유합니다.</div>
+</div>
+
+<!-- 문제 44~60 -->
+<div class="quiz">
+  <div class="question">문제 44: JSP 페이지의 모듈화를 위해 사용하는 방법이라고 할 수 없는 것은?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① page 지시어</div>
+  <div class="option" onclick="checkAnswer(this,false)">② include 액션 태그</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ include 지시어</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ prelude와 coda</div>
+  <div class="result"></div>
+  <div class="explanation">page 지시어는 JSP 페이지의 속성을 설정하는 데 사용되며, 모듈화와는 관련이 없습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 45: &lt;jsp:forward ... /&gt; 액션의 처리를 바르게 설명한 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 실행 결과의 맨 앞이나 맨 뒤에 자동으로 코드를 포함시킨다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 속성으로 지정된 페이지의 실행 결과를 태그가 위치한 부분에 삽입시킨다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ &lt;jsp:include&gt; 액션의 서브 요소로만 사용된다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ 페이지의 실행이 종료되고 새로운 페이지로의 이동이 일어난다.</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;jsp:forward&gt;는 현재 페이지 실행을 중단하고 지정된 페이지로 제어권을 넘깁니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 46: 쿠키의 유효 시간에 관한 설명으로 올바른 것은?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① 클라이언트 컴퓨터에서 쿠키가 유지되는 기간이다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 쿠키의 유효 시간이 음수라면 영구히 보관된다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 클라이언트의 추가 요청이 없어도 쿠키가 보존되는 기간이다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 출력 버퍼에서 쿠키 값을 변경할 수 있는 최대 시간이다.</div>
+  <div class="result"></div>
+  <div class="explanation">쿠키의 유효 시간(MaxAge)은 클라이언트 컴퓨터에 저장되어 유지되는 기간을 의미합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 47: 다음 코드의 의미를 바르게 설명한 것은?<br>&lt;% Cookie cookie = new Cookie("name", "value"); response.addCookie(cookie); %&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 쿠키를 만들어 요청 메시지의 헤더에 추가한다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">② 쿠키를 만들어 응답 메시지의 헤더에 추가한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 쿠키를 만들어 응답 메시지의 몸체에 추가한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 클라이언트가 보낸 요청 메시지로부터 쿠키 값을 읽는다.</div>
+  <div class="result"></div>
+  <div class="explanation">response.addCookie(cookie)는 HTTP 응답 헤더(Set-Cookie)에 추가하여 클라이언트가 쿠키를 저장하도록 합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 48: 세션을 사용하여 로그인/로그아웃을 처리하는 JSP 페이지에서 로그인 처리에 필요한 작업은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① request 영역에 session 객체를 저장한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② session 객체의 타임아웃 시간을 수정한다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ session 객체에 사용자 확인을 위한 속성을 추가한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ session 객체를 삭제한다.</div>
+  <div class="result"></div>
+  <div class="explanation">로그인 처리 시 세션에 사용자 정보를 저장하여 로그인 상태를 유지합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 49: 다음 중 세션이 종료되는 상황이 아닌 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 클라이언트가 웹 브라우저를 종료한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 세션의 유효 시간 동안 클라이언트의 추가 요청이 없었다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ JSP 페이지에서 session.invalidate()를 실행하였다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ JSP 페이지에서 session 객체에 저장된 모든 속성을 삭제하였다.</div>
+  <div class="result"></div>
+  <div class="explanation">속성을 삭제해도 세션 자체는 종료되지 않습니다. 세션 종료 조건은 브라우저 종료, 세션 타임아웃, invalidate 호출입니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 50: 자바 빈 객체에 관한 설명으로 잘못된 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① member.MemberInfo가 클래스의 이름에 해당한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② meminfo라는 이름의 객체가 존재하지 않으면 자바 빈 객체를 생성한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 객체가 가진 속성 age와 name에 값을 지정하고 있다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 객체의 사용 범위가 page이므로 해당 페이지에서만 사용할 수 있다.</div>
+  <div class="result"></div>
+  <div class="explanation">모든 선택지가 올바른 설명입니다. 문제 출제 오류 가능성 있습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 51: 자바 빈 객체의 이름을 출력하려면 빈칸에 들어갈 내용은?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① &lt;jsp:getProperty name="meminfo" property="name" /&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;jsp:getParameter id="meminfo" property="name" /&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ &lt;jsp:setProperty name="meminfo" property="name" /&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;% out.print(meminfo.getName()); %&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">자바 빈 객체의 속성 값을 출력하려면 &lt;jsp:getProperty&gt; 액션 태그를 사용합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 52: 표현 언어(EL)의 사용에 관한 설명으로 잘못된 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① 표현식을 대신하여 자주 사용된다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 태그의 속성 값을 지정할 때 표현 언어 수식을 사용한다.</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 표현 언어의 내장 객체와 JSP의 내장 객체는 다른 것이다.</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ 스크립트 요소의 내부에서 사용해야 한다.</div>
+  <div class="result"></div>
+  <div class="explanation">EL은 스크립트 요소 밖에서 사용합니다. 주로 태그 속성이나 HTML 내에서 ${ } 형태로 사용합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 53: &lt;% name = request.getParameter("name") %&gt;과 같은 의미를 EL로 표현하면?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① ${ param.name }</div>
+  <div class="option" onclick="checkAnswer(this,false)">② $( param.name )</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ [ param[name] ]</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ $( param[name] )</div>
+  <div class="result"></div>
+  <div class="explanation">EL에서 요청 파라미터는 param 내장 객체를 사용합니다. ${ param.name } 또는 ${ param["name"] } 가능</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 54: JSTL 코어 라이브러리를 사용하기 위한 지시어 빈칸 ㄱ에 들어갈 내용은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;%@ import</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;%@ page</div>
+  <div class="option" onclick="checkAnswer(this,true)">③ &lt;%@ taglib</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ &lt;%# taglib</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;%@ taglib %&gt; 지시어를 사용하여 JSTL 라이브러리를 포함합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 55: JSTL의 반복 태그로 잘못된 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;c:forEach&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;c:forTokens&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ &lt;c:forAll&gt;</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ &lt;c:repeat&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;c:repeat&gt;는 JSTL에 존재하지 않습니다. 반복 태그는 &lt;c:forEach&gt; 또는 &lt;c:forTokens&gt;를 사용합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 56: JSTL 조건 태그 중 사용되지 않는 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① &lt;c:if&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">② &lt;c:choose&gt;</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ &lt;c:when&gt;</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ &lt;c:case&gt;</div>
+  <div class="result"></div>
+  <div class="explanation">&lt;c:case&gt;는 JSTL에 없는 태그이며, 조건 분기에는 &lt;c:if&gt;, &lt;c:choose&gt;, &lt;c:when&gt;, &lt;c:otherwise&gt;를 사용합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 57: 세션 스코프와 관련 없는 것은?</div>
+  <div class="option" onclick="checkAnswer(this,false)">① sessionScope 내장 객체</div>
+  <div class="option" onclick="checkAnswer(this,false)">② HttpSession 객체</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ session.invalidate()</div>
+  <div class="option" onclick="checkAnswer(this,true)">④ requestScope</div>
+  <div class="result"></div>
+  <div class="explanation">requestScope는 요청 스코프이며, 세션과 관련 없습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 58: JSTL EL에서 요청 파라미터를 출력하는 방법은?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① ${param.id}</div>
+  <div class="option" onclick="checkAnswer(this,false)">② ${session.id}</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ ${application.id}</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ ${requestScope.id}</div>
+  <div class="result"></div>
+  <div class="explanation">param 내장 객체를 사용하면 요청 파라미터를 가져올 수 있습니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 59: EL에서 존재하지 않는 객체를 참조하면?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① 빈 문자열("") 반환</div>
+  <div class="option" onclick="checkAnswer(this,false)">② null 반환</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 예외 발생</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 0 반환</div>
+  <div class="result"></div>
+  <div class="explanation">EL은 존재하지 않는 객체를 참조하면 예외 없이 빈 문자열을 반환합니다.</div>
+</div>
+
+<div class="quiz">
+  <div class="question">문제 60: EL과 JSTL을 사용할 때의 장점으로 올바른 것은?</div>
+  <div class="option" onclick="checkAnswer(this,true)">① 스크립트 코드 없이 표현식과 태그만으로 동적 웹 페이지 작성 가능</div>
+  <div class="option" onclick="checkAnswer(this,false)">② 반드시 자바 코드를 JSP에 작성해야 한다</div>
+  <div class="option" onclick="checkAnswer(this,false)">③ 페이지 로딩 속도가 느려진다</div>
+  <div class="option" onclick="checkAnswer(this,false)">④ 스코프 사용이 불가능하다</div>
+  <div class="result"></div>
+  <div class="explanation">EL과 JSTL을 사용하면 자바 스크립트 코드 없이도 동적 콘텐츠를 작성할 수 있습니다.</div>
+</div>
+
+<script>
+function checkAnswer(elem, isCorrect) {
+  const parent = elem.parentElement;
+  const result = parent.querySelector(".result");
+  const explanation = parent.querySelector(".explanation");
+  
+  if (isCorrect) {
+    result.textContent = "✅ 정답!";
+    result.style.color = "green";
+  } else {
+    result.textContent = "❌ 오답!";
+    result.style.color = "red";
+  }
+  
+  explanation.style.display = "block";
+}
+</script>
+
+</body>
+</html>
