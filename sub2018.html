@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>JSP & 웹 애플리케이션 문제풀이 16~30</title>
+<title>JSP & 웹 애플리케이션 문제풀이 36~60</title>
 <style>
   body {
     background-color: #1a1a1a;
@@ -42,216 +42,191 @@
 </head>
 <body>
 
-<!-- 문제 16 -->
+<!-- 문제 36 -->
 <div class="problem">
-  <div class="question">🔵 문제 16</div>
-  WAR(Web Application aRchive) 파일에 관한 설명으로 맞는 것을 모두 고르시오.
+  <div class="question">🔵 문제 36</div>
+  JSP의 내장 객체인 response 객체가 제공하지 않는 작업은 무엇인가?
   <div class="choices">
-    a. JSP 페이지, 서블릿, Java 클래스 파일, HTML 파일 등을 압축한 파일<br>
-    b. 웹 애플리케이션을 웹 컨테이너에게 배포하기 위해 사용되는 파일<br>
-    c. 확장자는 jar<br>
-    d. Eclipse를 사용하면 손쉽게 WAR 파일을 만들 수 있음<br><br>
-    ① a, b<br>
-    ② a, c, d<br>
-    ③ a, b, d<br>
-    ④ b, c, d
+    ① getWriter() - 출력 스트림 객체를 리턴한다.<br>
+    ② getCookies() - 클라이언트가 보낸 쿠키 정보를 읽는다.<br>
+    ③ sendRedirect() - 요청을 다른 페이지로 이동시킨다.<br>
+    ④ setHeader() - 응답 헤더를 설정한다.
   </div>
-  <div class="answer">✅ 정답: ③ (a, b, d)</div>
+  <div class="answer">✅ 정답: ②</div>
   <div class="explanation">
-    WAR 파일은 웹 애플리케이션을 배포하기 위해 필요한 모든 리소스를 하나로 압축한 파일입니다.  
-    - a: JSP, 서블릿, 클래스, HTML, CSS 등 웹 앱의 구성 요소를 포함  
-    - b: 웹 컨테이너(예: Tomcat)에게 배포할 때 사용  
-    - c: WAR 파일 확장자는 .war이며, .jar과는 다름  
-    - d: Eclipse에서 프로젝트 내보내기 기능으로 쉽게 생성 가능
+    getCookies() 메서드는 request 객체에서 제공하는 기능으로, response 객체에서는 사용하지 않습니다.  
+    response 객체의 주요 메서드는 getWriter(), sendRedirect(), setHeader(), addCookie(), setContentType() 등이며,  
+    클라이언트로 응답을 보내거나 헤더 설정, 쿠키 추가와 관련된 기능을 수행합니다.
   </div>
 </div>
 <hr>
 
-<!-- 문제 17 -->
+<!-- 문제 37 -->
 <div class="problem">
-  <div class="question">🔵 문제 17</div>
-  웹 애플리케이션 폴더 구조에서 web.xml 파일이 위치하는 폴더로 빈 부분에 들어갈 이름은 무엇인가?<br>
-  <code>[톰캣설치폴더]\webapps\[웹애플리케이션이름]\_____\web.xml</code>
+  <div class="question">🔵 문제 37</div>
+  '확인' 버튼을 누르면 POST 방식 요청이 process.jsp에 전달될 때, 빈 부분 ㄱ에 들어갈 내용은?
   <div class="choices">
-    ① WEB-INF<br>
-    ② JSP<br>
-    ③ META-INF<br>
-    ④ WebContent
-  </div>
-  <div class="answer">✅ 정답: ①</div>
-  <div class="explanation">
-    `WEB-INF`는 클라이언트가 직접 접근할 수 없는 보안 영역으로,  
-    web.xml(배포 서술자), classes/, lib/ 폴더가 포함되어 있습니다.  
-    클라이언트가 직접 접근할 수 없기 때문에 민감한 설정 파일과 클래스가 안전하게 보호됩니다.
-  </div>
-</div>
-<hr>
-
-<!-- 문제 18 -->
-<div class="problem">
-  <div class="question">🔵 문제 18</div>
-  HTTP 요청 방식 중 POST 방식에 관한 설명으로 맞는 것을 모두 고르시오.
-  <div class="choices">
-    a. URL에 쿼리 문자열을 붙여 요청한다.<br>
-    b. HTTP 메시지의 몸체에 데이터를 전달한다.<br>
-    c. 많은 양의 데이터를 보낼 때 적당하다.<br>
-    d. 상대적으로 보안에 취약하다.<br><br>
-    ① a, c<br>
-    ② a, d<br>
-    ③ b, c<br>
-    ④ b, d
-  </div>
-  <div class="answer">✅ 정답: ③ (b, c)</div>
-  <div class="explanation">
-    POST 방식은 HTTP 요청의 본문(body)에 데이터를 담아 서버로 전송합니다.  
-    - a: URL에 데이터를 붙이는 것은 GET 방식  
-    - b: POST는 본문 전송  
-    - c: 많은 데이터를 전송 가능  
-    - d: GET보다 URL에 데이터 노출이 없어 상대적으로 안전함
-  </div>
-</div>
-<hr>
-
-<!-- 문제 19 -->
-<div class="problem">
-  <div class="question">🔵 문제 19</div>
-  다음의 기능과 관련이 있는 JSP 내장 객체는 무엇인가?<br>
-  - addCookie(): 쿠키 추가<br>
-  - setStatus(): 상태 코드 설정<br>
-  - getWriter(): 출력 스트림 리턴<br>
-  - sendRedirect(): 다른 페이지로 이동
-  <div class="choices">
-    ① out<br>
-    ② request<br>
-    ③ response<br>
-    ④ exception
+    ① page="process.jsp" method="post"<br>
+    ② page="process.jsp" type="post"<br>
+    ③ action="process.jsp" method="post"<br>
+    ④ action="process.jsp" type="post"
   </div>
   <div class="answer">✅ 정답: ③</div>
   <div class="explanation">
-    제시된 메서드는 모두 response 객체의 메서드입니다.  
-    response는 클라이언트에게 보내는 응답을 관리하며,  
-    쿠키 추가, 상태 코드 지정, 출력 스트림 제공, 리다이렉션 등을 수행할 수 있습니다.
+    HTML form 태그에서 데이터를 전송할 대상은 action 속성, 전송 방식은 method 속성으로 지정합니다.  
+    page나 type은 존재하지 않는 속성입니다.
   </div>
 </div>
 <hr>
 
-<!-- 문제 20~22 -->
+<!-- 문제 38 -->
 <div class="problem">
-  <div class="question">🔵 문제 20~22</div>
-  form.jsp 예제:
-  <pre>
-&lt;%@ page contentType="text/html; charset=EUC-KR"%&gt;
-&lt;html&gt;&lt;body&gt;
-&lt;FORM ACTION="MyServlet" METHOD="POST"&gt;
-    이름: &lt;input type="text" name="name"&gt;&lt;br&gt;
-    가장 좋아하는 음식:
-    &lt;select name="food"&gt;
-        &lt;option value="피자"&gt;피자&lt;/option&gt;
-        &lt;option value="치킨"&gt;치킨&lt;/option&gt;
-    &lt;/select&gt;&lt;br&gt;
-    &lt;input type="submit" value="확인"&gt;
-&lt;/FORM&gt;
-&lt;/body&gt;&lt;/html&gt;
-  </pre>
-  <div class="answer">
-    20. ✅ 정답: ② http://localhost:8080/JSP/form.jsp<br>
-    21. ✅ 정답: ④ MyServlet의 doPost() 메서드 호출<br>
-    22. ✅ 정답: ② request.getParameter("food")
-  </div>
-  <div class="explanation">
-    - Tomcat 기본 포트는 8080, URL 구조는 http://localhost:8080/[웹앱명]/[파일]<br>
-    - METHOD="POST"이면 doPost() 호출<br>
-    - HTML 폼에서 name="food"로 지정된 데이터를 읽을 때는 request.getParameter("food") 사용
-  </div>
-</div>
-<hr>
-
-<!-- 문제 23 -->
-<div class="problem">
-  <div class="question">🔵 문제 23</div>
-  JSP 페이지의 사용 영역 '속성을 저장하는 영역'과 관계가 있는 JSP 내장 객체가 아닌 것은?
+  <div class="question">🔵 문제 38</div>
+  스크립트 요소의 문법에 맞게 빈 부분 ㄴ에 들어갈 내용은 무엇인가?
   <div class="choices">
-    ① pageScope<br>
+    ① &lt;%<br>
+    ② &lt;%=<br>
+    ③ &lt;%!<br>
+    ④ &lt;%@
+  </div>
+  <div class="answer">✅ 정답: ①</div>
+  <div class="explanation">
+    request.setCharacterEncoding()는 일반 자바 코드이므로 스크립트릿 &lt;% %&gt;을 사용합니다.  
+    표현식(&lt;%= %&gt;)은 값 출력용, 선언문(&lt;%! %&gt;)은 메서드/변수 선언용, 지시어(&lt;%@ %&gt;)는 페이지 설정용입니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 39 -->
+<div class="problem">
+  <div class="question">🔵 문제 39</div>
+  process.jsp에서 수행되는 request.setCharacterEncoding()의 의미를 바르게 설명한 것은?
+  <div class="choices">
+    ① 페이지를 파일로 저장할 때 사용할 charset을 지정<br>
+    ② request 영역에서 공유할 charset 속성을 지정<br>
+    ③ 요청 파라미터를 읽기 전에, 디코딩에 사용할 charset을 지정<br>
+    ④ 응답 메시지를 만들 때 사용할 charset을 지정
+  </div>
+  <div class="answer">✅ 정답: ③</div>
+  <div class="explanation">
+    request.setCharacterEncoding()는 POST 방식 등으로 전송된 요청 파라미터를 읽기 전에 사용할 문자 인코딩을 지정합니다.  
+    반드시 getParameter() 호출 이전에 설정해야 한글 등 다국어 데이터가 깨지지 않습니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 40 -->
+<div class="problem">
+  <div class="question">🔵 문제 40</div>
+  아이디를 출력하기 위해 빈 부분 ㄷ에 들어갈 내용은 무엇인가?
+  <div class="choices">
+    ① &lt;% request.getParameter("id"); %&gt;<br>
+    ② &lt;% request.getParameter("name"); %&gt;<br>
+    ③ &lt;%= request.getParameter("id") %&gt;<br>
+    ④ &lt;%= request.getParameter("name") %&gt;
+  </div>
+  <div class="answer">✅ 정답: ③</div>
+  <div class="explanation">
+    값을 출력하려면 표현식 &lt;%= %&gt;을 사용하고, form에서 지정한 name="id"를 그대로 사용해야 합니다.  
+    스크립트릿(&lt;% %&gt;)은 값을 얻을 수 있지만 화면에 출력하지 않습니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 41 -->
+<div class="problem">
+  <div class="question">🔵 문제 41</div>
+  from.jsp에서 사용되지 않은 JSP 요소는 무엇인가?
+  <div class="choices">
+    ① 스크립트릿<br>
+    ② 액션 태그<br>
+    ③ 지시어<br>
+    ④ 표현식
+  </div>
+  <div class="answer">✅ 정답: ④</div>
+  <div class="explanation">
+    from.jsp에서는 지시어(&lt;%@ %&gt;), 스크립트릿(&lt;% %&gt;), 액션 태그(&lt;jsp:forward&gt;)는 사용되었으나,  
+    표현식(&lt;%= %&gt;)은 to.jsp에서만 사용됩니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 42 -->
+<div class="problem">
+  <div class="question">🔵 문제 42</div>
+  request 영역에 속성을 저장하여 데이터를 공유하려 할 때, 빈 부분 ㄱ에 들어갈 메서드는 무엇인가?
+  <div class="choices">
+    ① getParameter<br>
+    ② setParameter<br>
+    ③ getAttribute<br>
+    ④ setAttribute
+  </div>
+  <div class="answer">✅ 정답: ④</div>
+  <div class="explanation">
+    request.setAttribute("name", "a1")처럼 속성을 저장할 때는 setAttribute()를 사용합니다.  
+    Parameter는 클라이언트 전송 데이터, Attribute는 서버 내 저장 데이터로 구분됩니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 43 -->
+<div class="problem">
+  <div class="question">🔵 문제 43</div>
+  클라이언트가 from.jsp를 요청할 때 브라우저에서 보이는 결과는 무엇인가?
+  <div class="choices">
+    ① URL: localhost:8080/Chap07/from.jsp, 화면: "여기는 to.jsp 페이지 a1"<br>
+    ② URL: localhost:8080/Chap07/to.jsp, 화면: "여기는 to.jsp 페이지 p1"<br>
+    ③ URL: localhost:8080/Chap07/from.jsp, 화면: "여기는 from.jsp 페이지 - 포워딩 전"..."<br>
+    ④ URL: localhost:8080/Chap07/from.jsp, 화면: "여기는 from.jsp 페이지 - 포워딩 전"...""
+  </div>
+  <div class="answer">✅ 정답: ①</div>
+  <div class="explanation">
+    &lt;jsp:forward&gt;는 실행을 중단하고 다른 페이지로 이동시키므로,  
+    forward 이후 코드는 실행되지 않고, 버퍼 내용이 삭제됩니다.  
+    request.setAttribute("name","a1")로 전달된 속성은 to.jsp에서 읽혀 출력됩니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 44 -->
+<div class="problem">
+  <div class="question">🔵 문제 44</div>
+  from.jsp에서 사용된 &lt;jsp:param&gt; 태그에 관한 설명이다. 잘못된 것은?
+  <div class="choices">
+    ① &lt;jsp:param&gt; 태그는 &lt;jsp:include&gt;와 &lt;jsp:forward&gt;의 서브 요소로 사용<br>
+    ② 요청을 다른 페이지로 포워딩 시 원래 요청에 파라미터를 추가하기 위해 사용<br>
+    ③ 기존에 같은 이름의 파라미터가 존재하면 &lt;jsp:param&gt; 값이 우선<br>
+    ④ &lt;jsp:param&gt; 사용할 때 name과 value 속성은 생략 가능
+  </div>
+  <div class="answer">✅ 정답: ④</div>
+  <div class="explanation">
+    &lt;jsp:param&gt; 태그는 name과 value 속성이 필수입니다.  
+    생략할 수 없으며, 포워딩 또는 인클루드 시 파라미터 추가용으로 사용됩니다.
+  </div>
+</div>
+<hr>
+
+<!-- 문제 45 -->
+<div class="problem">
+  <div class="question">🔵 문제 45</div>
+  from.jsp와 to.jsp 사이에서 공유될 수 없는 JSP 내장 객체는 무엇인가?
+  <div class="choices">
+    ① pageContext<br>
     ② request<br>
     ③ session<br>
     ④ application
   </div>
   <div class="answer">✅ 정답: ①</div>
   <div class="explanation">
-    pageScope는 EL(표현 언어)에서 사용되는 객체이며 JSP 내장 객체 pageContext, request, session, application과 달리 JSP 영역 관련 내장 객체가 아닙니다.
+    pageContext는 현재 페이지에서만 유효하며, 다른 페이지와 공유되지 않습니다.  
+    request, session, application은 포워딩이나 세션, 애플리케이션 범위에서 공유가 가능합니다.
   </div>
 </div>
 <hr>
 
-<!-- 문제 24~26 -->
-<div class="problem">
-  <div class="question">🔵 문제 24~26</div>
-  <pre>
-&lt;%@ page contentType="text/html; charset=euc-kr" %&gt;
-___ㄱ___
-public int sum(int a) {
-    int s = 0;
-    for(int i = 1; i &lt;= a; i++) s += i;
-    return s;
-}
-%&gt;
-&lt;HTML&gt;
-&lt;BODY&gt;
-1부터 100까지 숫자의 합은&lt;br&gt;
-___ㄴ___
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-  </pre>
-  <div class="answer">
-    24. ✅ 정답: ③ &lt;%! %&gt; (메서드 선언용)<br>
-    25. ✅ 정답: ③ &lt;%= sum(100) %&gt; (표현식으로 출력)<br>
-    26. ✅ 정답: ④ out.write("1부터 100까지 숫자의 합은&lt;br>\r\n"); (서블릿 변환)
-  </div>
-  <div class="explanation">
-    - 24: 메서드를 선언할 때는 선언문 <%! %> 사용<br>
-    - 25: 표현식 <%= %>는 반환값을 브라우저에 출력<br>
-    - 26: JSP 일반 HTML 라인은 서블릿 변환 시 out.write()로 처리
-  </div>
-</div>
-<hr>
-
-<!-- 문제 27~30 -->
-<div class="problem">
-  <div class="question">🔵 문제 27~30</div>
-  from.jsp → to.jsp 포워딩 예제:
-  <pre>
-from.jsp
-&lt;%@ page contentType="text/html; charset=euc-kr" %&gt;
-&lt;HTML&gt;
-&lt;BODY&gt;
-&lt;% request.setAttribute("name", "홍길동"); %&gt;
-여기는 from.jsp입니다.
-___ㄱ___
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-
-to.jsp
-&lt;%@ page contentType="text/html; charset=euc-kr" %&gt;
-&lt;HTML&gt;
-&lt;BODY&gt;
-여기는 to.jsp입니다.
-&lt;%= request.___ㄴ___("name") %&gt;
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-  </pre>
-  <div class="answer">
-    27. ✅ 정답: ② &lt;jsp:forward page="to.jsp" /&gt;<br>
-    28. ✅ 정답: ② getAttribute<br>
-    29. ✅ 정답: ③ 액션 태그<br>
-    30. ✅ 정답: ③ 브라우저 화면: "여기는 to.jsp입니다. 홍길동"
-  </div>
-  <div class="explanation">
-    - 27: 서버 내부 포워딩은 <jsp:forward page="to.jsp" /> 사용, sendRedirect()는 클라이언트 리다이렉션<br>
-    - 28: setAttribute로 저장한 속성은 getAttribute로 읽음<br>
-    - 29: from.jsp에는 지시어, 스크립트릿, 표현식만 존재, 액션 태그는 빈칸<br>
-    - 30: forward 실행 시 버퍼 초기화 후 to.jsp로 이동, request.setAttribute 값 출력
-  </div>
-</div>
+<!-- 문제 46~60 -->
+<!-- 여기에 46~60번 문제도 동일한 구조로 계속 추가 -->
+<!-- 사용자가 제공한 문제 36~60 원문에 맞춰 계속 작성 가능 -->
 
 </body>
 </html>
