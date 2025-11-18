@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSP 프로그래밍 시험 문제 및 해설</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            color: #2d3748;
+            background: #f7fafc;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #4299e1;
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2b6cb0;
+            margin-bottom: 12px;
+        }
+        
+        .header-subtitle {
+            font-size: 16px;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+        
+        .question-block {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 5px solid #4299e1;
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: #4299e1;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 17px;
+            color: #1a202c;
+            margin-bottom: 20px;
+            line-height: 1.9;
+            font-weight: 500;
+        }
+        
+        .options {
+            margin: 20px 0;
+            padding-left: 10px;
+        }
+        
+        .option {
+            padding: 12px 18px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+        
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: auto;
+            border: 3px solid #2d3748;
+        }
+        
+        .code-title {
+            color: #63b3ed;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .answer-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .answer-label {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .answer-label::before {
+            content: "✓";
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        
+        .answer-content {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+        }
+        
+        .explanation {
+            margin-top: 20px;
+            padding: 20px;
+            background: #edf2f7;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+            color: #2d3748;
+        }
+        
+        .explanation-title {
+            font-weight: 700;
+            color: #276749;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        
+        .highlight {
+            background: #fef5e7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #744210;
+        }
+        
+        .bullet-point {
+            margin-left: 20px;
+            margin-top: 8px;
+            color: #4a5568;
+        }
+        
+        .bullet-point::before {
+            content: "•";
+            color: #4299e1;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .path-text {
+            background: #2d3748;
+            color: #68d391;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 문제 16 -->
+        <div class="question-block">
+            <span class="question-number">문제 16</span>
+            <div class="question-text">
+                WAR(Web Application aRchive) 파일에 관한 설명으로 맞는 것을 모두 고르시오.
+            </div>
+            <div class="options">
+                <div class="option">ㄱ. JSP 페이지, 서블릿, Java 클래스 파일, HTML 파일 등을 압축한 파일</div>
+                <div class="option">ㄴ. 웹 어플리케이션을 웹 컨테이너에게 배포하기 위해 사용되는 파일</div>
+                <div class="option">ㄷ. 확장자는 jar</div>
+                <div class="option">ㄹ. Eclipse를 사용하면 손쉽게 WAR 파일을 만들 수 있음</div>
+            </div>
+            <div class="options">
+                <div class="option">① ㄱ, ㄴ, ㄷ</div>
+                <div class="option">② ㄱ, ㄴ, ㄹ</div>
+                <div class="option">③ ㄱ, ㄷ, ㄹ</div>
+                <div class="option">④ ㄴ, ㄷ, ㄹ</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">② ㄱ, ㄴ, ㄹ</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        WAR 파일의 특징:
+                        <div class="bullet-point"><span class="highlight">ㄱ (O)</span> JSP, 서블릿, Java 클래스, HTML 등 웹 애플리케이션 구성 요소를 압축한 파일입니다.</div>
+                        <div class="bullet-point"><span class="highlight">ㄴ (O)</span> 웹 컨테이너(Tomcat 등)에 배포하기 위한 표준 형식입니다.</div>
+                        <div class="bullet-point"><span class="highlight">ㄷ (X)</span> 확장자는 <span class="highlight">.war</span>입니다. (.jar는 Java Archive의 확장자)</div>
+                        <div class="bullet-point"><span class="highlight">ㄹ (O)</span> Eclipse 등의 IDE에서 쉽게 생성할 수 있습니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 17 -->
+        <div class="question-block">
+            <span class="question-number">문제 17</span>
+            <div class="question-text">
+                웹 어플리케이션 폴더 구조에서 web.xml 파일이 위치하는 폴더로 밑줄 부분에 들어갈 이름은 무엇인가?
+            </div>
+            <div class="code-block">
+                <div class="code-title">경로 구조:</div>
+                [톰캣홈]\webapps\[웹어플리케이션명]\______\web.xml
+            </div>
+            <div class="options">
+                <div class="option">① WEB-INF</div>
+                <div class="option">② JSP</div>
+                <div class="option">③ META-INF</div>
+                <div class="option">④ WebContent</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">① WEB-INF</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        <span class="highlight">WEB-INF</span> 폴더는 웹 애플리케이션의 중요한 설정 폴더입니다.
+                        <div class="bullet-point"><span class="path-text">web.xml</span> 배포 서술자(Deployment Descriptor) 파일이 위치합니다.</div>
+                        <div class="bullet-point">클라이언트가 직접 접근할 수 없는 보안 영역입니다.</div>
+                        <div class="bullet-point">컴파일된 클래스 파일은 <span class="path-text">WEB-INF/classes</span>에 저장됩니다.</div>
+                        <div class="bullet-point">라이브러리 JAR 파일은 <span class="path-text">WEB-INF/lib</span>에 저장됩니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 18 -->
+        <div class="question-block">
+            <span class="question-number">문제 18</span>
+            <div class="question-text">
+                HTTP 요청 방식 중 POST 방식에 관한 설명으로 맞는 것을 모두 고르시오.
+            </div>
+            <div class="options">
+                <div class="option">ㄱ. URL에 쿼리 문자열을 붙여 요청한다.</div>
+                <div class="option">ㄴ. HTTP 메시지의 몸체에 데이터를 전달한다.</div>
+                <div class="option">ㄷ. 많은 양의 데이터를 보낼 때 적당하다.</div>
+                <div class="option">ㄹ. 상대적으로 보안에 취약하다.</div>
+            </div>
+            <div class="options">
+                <div class="option">① ㄱ, ㄷ</div>
+                <div class="option">② ㄴ, ㄷ</div>
+                <div class="option">③ ㄴ, ㄹ</div>
+                <div class="option">④ ㄷ, ㄹ</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">② ㄴ, ㄷ</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        POST 방식의 특징:
+                        <div class="bullet-point"><span class="highlight">ㄱ (X)</span> URL에 쿼리 문자열을 붙이는 것은 <span class="highlight">GET 방식</span>입니다.</div>
+                        <div class="bullet-point"><span class="highlight">ㄴ (O)</span> POST는 HTTP 메시지 본문(body)에 데이터를 담아 전송합니다.</div>
+                        <div class="bullet-point"><span class="highlight">ㄷ (O)</span> URL 길이 제한이 없어 대용량 데이터 전송에 적합합니다.</div>
+                        <div class="bullet-point"><span class="highlight">ㄹ (X)</span> 보안에 취약한 것은 GET 방식입니다. POST는 URL에 데이터가 노출되지 않아 상대적으로 안전합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 19 -->
+        <div class="question-block">
+            <span class="question-number">문제 19</span>
+            <div class="question-text">
+                다음의 기능과 관련이 있는 JSP 내장 객체는 무엇인가?
+            </div>
+            <div class="options">
+                <div class="option">• addCookie() : 쿠키의 추가</div>
+                <div class="option">• setStatus() : 상태 코드의 설정</div>
+                <div class="option">• getWriter() : 출력 스트림 객체의 리턴</div>
+                <div class="option">• sendRedirect() : 다른 페이지로 이동</div>
+            </div>
+            <div class="options">
+                <div class="option">① out</div>
+                <div class="option">② request</div>
+                <div class="option">③ response</div>
+                <div class="option">④ exception</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">③ response</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        <span class="highlight">response 객체</span>는 클라이언트로 응답을 보낼 때 사용하는 JSP 내장 객체입니다.
+                        <div class="bullet-point"><span class="highlight">addCookie()</span> 쿠키를 응답에 추가합니다.</div>
+                        <div class="bullet-point"><span class="highlight">setStatus()</span> HTTP 응답 상태 코드를 설정합니다.</div>
+                        <div class="bullet-point"><span class="highlight">getWriter()</span> 문자 출력 스트림을 반환합니다.</div>
+                        <div class="bullet-point"><span class="highlight">sendRedirect()</span> 클라이언트를 다른 URL로 리다이렉트합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 20 -->
+        <div class="question-block">
+            <span class="question-number">문제 20</span>
+            <div class="question-text">
+                웹 어플리케이션이 톰캣에 배포되었고, 위 페이지가 <span class="path-text">[톰캣홈]\webapps\JSP\form.jsp</span> 라고 할 때 브라우저로 어떻게 접근하는가? (톰캣은 자신의 기본 포트를 사용한다고 가정한다)
+            </div>
+            <div class="code-block">
+                <div class="code-title">form.jsp</div>
+&lt;%@ page contentType="text/html; charset=EUC-KR"%&gt;
+&lt;html&gt;
+&lt;body&gt;
+    &lt;FORM ACTION="MyServlet" METHOD="POST"&gt;
+        이름 : &lt;input type="text" name="name"&gt;&lt;br&gt;
+        가장 좋아하는 음식 :
+        &lt;select name="food"&gt;
+            &lt;option value="피자"&gt;피자&lt;/option&gt;
+            &lt;option value="치킨"&gt;치킨&lt;/option&gt;
+            &lt;option value="파스타"&gt;파스타&lt;/option&gt;
+            &lt;option value="떡볶이"&gt;떡볶이&lt;/option&gt;
+        &lt;/select&gt;&lt;br&gt;
+        &lt;input type="submit" value="전송"&gt;
+        &lt;input type="reset" value="취소"&gt;
+    &lt;/FORM&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+            <div class="options">
+                <div class="option">① http://localhost:80/JSP/form.jsp</div>
+                <div class="option">② http://localhost:8080/JSP/form.jsp</div>
+                <div class="option">③ http://localhost/ROOT/JSP/form.jsp</div>
+                <div class="option">④ http://localhost:8080/JSP/WebContent/form.jsp</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">② http://localhost:8080/JSP/form.jsp</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        URL 구성 방식:
+                        <div class="bullet-point">톰캣의 <span class="highlight">기본 포트는 8080</span>입니다.</div>
+                        <div class="bullet-point">URL 형식: <span class="highlight">http://호스트:포트/컨텍스트경로/파일경로</span></div>
+                        <div class="bullet-point">webapps 폴더의 하위 폴더명이 <span class="highlight">컨텍스트 경로</span>가 됩니다.</div>
+                        <div class="bullet-point">따라서 <span class="path-text">webapps\JSP\form.jsp</span>는 <span class="path-text">localhost:8080/JSP/form.jsp</span>로 접근합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 21 -->
+        <div class="question-block">
+            <span class="question-number">문제 21</span>
+            <div class="question-text">
+                위 페이지를 실행하면 입력 폼이 나타난다. 여기서 데이터를 입력한 후 전송 버튼을 누르면 어떻게 처리되는가?
+            </div>
+            <div class="options">
+                <div class="option">① form_process.jsp가 요청을 처리한다.</div>
+                <div class="option">② MyServlet 서블릿의 service() 메서드가 요청을 처리한다.</div>
+                <div class="option">③ MyServlet 서블릿의 doGet() 메서드가 요청을 처리한다.</div>
+                <div class="option">④ MyServlet 서블릿의 doPost() 메서드가 요청을 처리한다.</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">④ MyServlet 서블릿의 doPost() 메서드가 요청을 처리한다.</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        <div class="bullet-point">폼의 <span class="highlight">ACTION="MyServlet"</span>은 요청을 MyServlet으로 보냅니다.</div>
+                        <div class="bullet-point">폼의 <span class="highlight">METHOD="POST"</span>는 POST 방식으로 전송합니다.</div>
+                        <div class="bullet-point">서블릿에서 POST 요청은 <span class="highlight">doPost() 메서드</span>가 처리합니다.</div>
+                        <div class="bullet-point">GET 요청은 doGet(), POST 요청은 doPost()가 처리하는 것이 서블릿의 기본 구조입니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 22 -->
+        <div class="question-block">
+            <span class="question-number">문제 22</span>
+            <div class="question-text">
+                가장 좋아하는 음식에 입력된 사용자 데이터를 읽기 위한 방법은?
+            </div>
+            <div class="options">
+                <div class="option">① request.getParameter("name")</div>
+                <div class="option">② request.getParameter("food")</div>
+                <div class="option">③ request.getAttribute("name")</div>
+                <div class="option">④ request.getHeader("food")</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">② request.getParameter("food")</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        <div class="bullet-point">HTML 폼에서 <span class="highlight">&lt;select name="food"&gt;</span>로 정의되어 있습니다.</div>
+                        <div class="bullet-point">폼 데이터를 읽으려면 <span class="highlight">getParameter("name속성값")</span>을 사용합니다.</div>
+                        <div class="bullet-point"><span class="highlight">getAttribute()</span>는 서버 내부에서 설정한 속성을 읽을 때 사용합니다.</div>
+                        <div class="bullet-point"><span class="highlight">getHeader()</span>는 HTTP 헤더 정보를 읽을 때 사용합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 23 -->
+        <div class="question-block">
+            <span class="question-number">문제 23</span>
+            <div class="question-text">
+                JSP 페이지의 사용 영역(스코프)에 데이터를 저장하는 영역과 관계가 있는 JSP 내장 객체가 아닌 것은?
+            </div>
+            <div class="options">
+                <div class="option">① pageScope</div>
+                <div class="option">② request</div>
+                <div class="option">③ session</div>
+                <div class="option">④ application</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">① pageScope</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        JSP의 4가지 영역(스코프) 객체:
+                        <div class="bullet-point"><span class="highlight">pageContext</span> 페이지 범위 (현재 페이지에서만 유효)</div>
+                        <div class="bullet-point"><span class="highlight">request</span> 요청 범위 (하나의 요청 동안 유효)</div>
+                        <div class="bullet-point"><span class="highlight">session</span> 세션 범위 (브라우저가 살아있는 동안 유효)</div>
+                        <div class="bullet-point"><span class="highlight">application</span> 애플리케이션 범위 (웹 앱이 종료될 때까지 유효)</div>
+                        <div class="bullet-point" style="margin-top: 15px;"><span class="highlight">pageScope</span>는 EL에서 사용하는 묵시적 객체이지, JSP 내장 객체가 아닙니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 24 -->
+        <div class="question-block">
+            <span class="question-number">문제 24</span>
+            <div class="question-text">
+                스크립트 요소의 문법에 맞게 밑줄 친 <span style="color: #e53e3e; font-weight: 700;">ㄱ</span>에 들어갈 내용은 무엇인가?
+            </div>
+            <div class="code-block">
+&lt;%@ page contentType="text/html; charset=euc-kr" %&gt;
+&lt;%!
+    public int sum(int a) {
+        int s = 0;
+        for(int i = 1; i &lt;= a; i++) s += i;
+        return s;
+    }
+%&gt;
+&lt;HTML&gt;
+&lt;BODY&gt;
+    1부터 100 까지 숫자의 합은&lt;br&gt;
+    <span style="color: #48bb78; font-weight: 700;">ㄴ</span>
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+            </div>
+            <div class="options">
+                <div class="option">① &lt;%</div>
+                <div class="option">② &lt;%=</div>
+                <div class="option">③ &lt;%!</div>
+                <div class="option">④ &lt;%@</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">③ &lt;%!</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        JSP 스크립트 요소:
+                        <div class="bullet-point"><span class="highlight">&lt;%! ... %&gt;</span> 선언문(Declaration) - 멤버 변수나 메서드를 정의할 때 사용</div>
+                        <div class="bullet-point"><span class="highlight">&lt;% ... %&gt;</span> 스크립틀릿(Scriptlet) - 일반 Java 코드를 작성할 때 사용</div>
+                        <div class="bullet-point"><span class="highlight">&lt;%= ... %&gt;</span> 표현식(Expression) - 값을 출력할 때 사용</div>
+                        <div class="bullet-point"><span class="highlight">&lt;%@ ... %&gt;</span> 지시자(Directive) - 페이지 설정 정보를 지정할 때 사용</div>
+                        <div class="bullet-point" style="margin-top: 15px;">sum() 메서드를 정의하는 것이므로 <span class="highlight">선언문 &lt;%!</span>을 사용해야 합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 25 -->
+        <div class="question-block">
+            <span class="question-number">문제 25</span>
+            <div class="question-text">
+                1부터 100까지의 합을 출력하기 위해 밑줄 친 <span style="color: #48bb78; font-weight: 700;">ㄴ</span>에 들어갈 내용은 무엇인가?
+            </div>
+            <div class="options">
+                <div class="option">① sum(100)</div>
+                <div class="option">② &lt;% sum(100); %&gt;</div>
+                <div class="option">③ &lt;%= sum(100) %&gt;</div>
+                <div class="option">④ out.print( sum(100) );</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">③ &lt;%= sum(100) %&gt;</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        <div class="bullet-point"><span class="highlight">&lt;%= ... %&gt;</span> 표현식은 값을 계산하고 출력합니다.</div>
+                        <div class="bullet-point">sum(100)은 5050이라는 값을 반환하므로, 이를 출력하려면 표현식을 사용해야 합니다.</div>
+                        <div class="bullet-point">① sum(100)만 쓰면 JSP 문법이 아닙니다.</div>
+                        <div class="bullet-point">② &lt;% sum(100); %&gt;는 실행만 하고 출력하지 않습니다.</div>
+                        <div class="bullet-point">④ out.print()는 스크립틀릿 안에서 사용해야 하는데 스크립틀릿 태그가 없습니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 26 -->
+        <div class="question-block">
+            <span class="question-number">문제 26</span>
+            <div class="question-text">
+                위에 나오는 라인인 "1부터 100 까지 숫자의 합은&lt;br&gt;"이 서블릿 프로그램에서 어떻게 번역될지 예상해 보시오. (출력에 필요한 객체는 자동으로 만들어진다고 가정한다)
+            </div>
+            <div class="options">
+                <div class="option">① print("1부터 100 까지 숫자의 합은 &lt;br&gt;\r\n")</div>
+                <div class="option">② String s = "1부터 100 까지 숫자의 합은&lt;br&gt;";</div>
+                <div class="option">③ System.out.println("1부터 100 까지 숫자의 합은 &lt;br&gt;");</div>
+                <div class="option">④ out.write("1부터 100 까지 숫자의 합은 &lt;br&gt;\r\n");</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">④ out.write("1부터 100 까지 숫자의 합은 &lt;br&gt;\r\n");</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        JSP 페이지의 서블릿 변환 과정:
+                        <div class="bullet-point">JSP 페이지는 실행 시 서블릿 클래스로 변환됩니다.</div>
+                        <div class="bullet-point">HTML 텍스트는 <span class="highlight">out.write()</span> 메서드 호출로 변환됩니다.</div>
+                        <div class="bullet-point">out 객체는 <span class="highlight">JspWriter</span> 타입으로 자동 생성됩니다.</div>
+                        <div class="bullet-point">\r\n은 줄바꿈 문자로 자동 추가됩니다.</div>
+                        <div class="bullet-point">① print()는 존재하지 않는 메서드입니다.</div>
+                        <div class="bullet-point">② 단순 문자열 변수 선언은 출력과 무관합니다.</div>
+                        <div class="bullet-point">③ System.out.println()은 서버 콘솔에 출력하므로 틀렸습니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 27 -->
+        <div class="question-block">
+            <span class="question-number">문제 27</span>
+            <div class="question-text">
+                브라우저가 from.jsp 페이지를 요청하면 to.jsp 페이지로의 포워딩이 일어난다. to.jsp 페이지로의 포워딩을 위해 밑줄 친 <span style="color: #e53e3e; font-weight: 700;">ㄱ</span>에 들어갈 코드는?
+            </div>
+            <div class="code-block">
+                <div class="code-title">from.jsp</div>
+&lt;%@ page contentType="text/html; charset=euc-kr" %&gt;
+&lt;HTML&gt;
+&lt;BODY&gt;
+    &lt;%
+    request.setAttribute("name", "홍길동");
+    %&gt;
+    여기는 from.jsp입니다.
+    <span style="color: #e53e3e; font-weight: 700;">ㄱ</span>
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+            </div>
+            <div class="code-block">
+                <div class="code-title">to.jsp</div>
+&lt;%@ page contentType="text/html; charset=euc-kr" %&gt;
+&lt;HTML&gt;
+&lt;BODY&gt;
+    여기는 to.jsp입니다.
+    &lt;%= request.<span style="color: #48bb78; font-weight: 700;">ㄴ</span>("name") %&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+            </div>
+            <div class="options">
+                <div class="option">① &lt;jsp:action forward="to.jsp" /&gt;</div>
+                <div class="option">② &lt;jsp:forward page="to.jsp" /&gt;</div>
+                <div class="option">③ response.forward("to.jsp");</div>
+                <div class="option">④ response.sendRedirect("to.jsp");</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">② &lt;jsp:forward page="to.jsp" /&gt;</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        페이지 이동 방법:
+                        <div class="bullet-point"><span class="highlight">&lt;jsp:forward page="..." /&gt;</span> JSP 표준 액션 태그로 포워딩합니다.</div>
+                        <div class="bullet-point">포워딩은 서버 내부에서 처리되며, request 객체가 유지됩니다.</div>
+                        <div class="bullet-point">URL은 변경되지 않고, setAttribute()로 설정한 속성도 유지됩니다.</div>
+                        <div class="bullet-point">④ sendRedirect()는 리다이렉트로, 새로운 요청을 생성하므로 request 속성이 유지되지 않습니다.</div>
+                        <div class="bullet-point">① action은 존재하지 않는 태그입니다.</div>
+                        <div class="bullet-point">③ response.forward()는 존재하지 않는 메서드입니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 28 -->
+        <div class="question-block">
+            <span class="question-number">문제 28</span>
+            <div class="question-text">
+                to.jsp에서 from.jsp로부터 전달받은 속성을 읽어 출력하고자 한다. 밑줄 친 <span style="color: #48bb78; font-weight: 700;">ㄴ</span>에 들어갈 메서드의 이름은 무엇인가?
+            </div>
+            <div class="options">
+                <div class="option">① getParameter</div>
+                <div class="option">② getAttribute</div>
+                <div class="option">③ getHeader</div>
+                <div class="option">④ getName</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">② getAttribute</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        request 객체의 데이터 전달 메서드:
+                        <div class="bullet-point"><span class="highlight">setAttribute()</span> 속성을 설정합니다.</div>
+                        <div class="bullet-point"><span class="highlight">getAttribute()</span> 설정된 속성을 읽어옵니다.</div>
+                        <div class="bullet-point">from.jsp에서 <span class="highlight">request.setAttribute("name", "홍길동")</span>으로 설정했으므로,</div>
+                        <div class="bullet-point">to.jsp에서는 <span class="highlight">request.getAttribute("name")</span>으로 읽어야 합니다.</div>
+                        <div class="bullet-point" style="margin-top: 15px;">① getParameter()는 폼 데이터나 쿼리 스트링을 읽을 때 사용합니다.</div>
+                        <div class="bullet-point">③ getHeader()는 HTTP 헤더 정보를 읽을 때 사용합니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 29 -->
+        <div class="question-block">
+            <span class="question-number">문제 29</span>
+            <div class="question-text">
+                위에서 사용되고 있지 않은 JSP 요소는 무엇인가?
+            </div>
+            <div class="options">
+                <div class="option">① 스크립트릿</div>
+                <div class="option">② 지시어</div>
+                <div class="option">③ 액션 태그</div>
+                <div class="option">④ 표현식</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">③ 액션 태그</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        from.jsp와 to.jsp에서 사용된 JSP 요소:
+                        <div class="bullet-point"><span class="highlight">지시어</span> &lt;%@ page contentType="..." %&gt;</div>
+                        <div class="bullet-point"><span class="highlight">스크립트릿</span> &lt;% request.setAttribute(...); %&gt;</div>
+                        <div class="bullet-point"><span class="highlight">표현식</span> &lt;%= request.getAttribute("name") %&gt;</div>
+                        <div class="bullet-point" style="margin-top: 15px;"><span class="highlight">액션 태그</span>는 사용되지 않았습니다.</div>
+                        <div class="bullet-point">액션 태그 예시: &lt;jsp:forward&gt;, &lt;jsp:include&gt;, &lt;jsp:useBean&gt; 등</div>
+                        <div class="bullet-point">문제 27의 정답에서 포워딩에 사용했지만, 문제 29는 from.jsp와 to.jsp 자체 코드만을 묻고 있습니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 문제 30 -->
+        <div class="question-block">
+            <span class="question-number">문제 30</span>
+            <div class="question-text">
+                클라이언트가 from.jsp를 요청했을 때 브라우저에서 보이는 결과는 무엇일까?
+            </div>
+            <div class="options">
+                <div class="option">① 여기는 from.jsp입니다.</div>
+                <div class="option">② 여기는 to.jsp입니다.</div>
+                <div class="option">③ 여기는 to.jsp입니다. 홍길동</div>
+                <div class="option">④ 여기는 from.jsp입니다.<br>여기는 to.jsp입니다. 홍길동</div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-label">정답</div>
+                <div class="answer-content">③ 여기는 to.jsp입니다. 홍길동</div>
+                <div class="explanation">
+                    <div class="explanation-title">💡 해설</div>
+                    <div class="explanation-text">
+                        포워딩(Forward)의 동작 원리:
+                        <div class="bullet-point">from.jsp에서 &lt;jsp:forward page="to.jsp" /&gt;를 만나면 즉시 to.jsp로 이동합니다.</div>
+                        <div class="bullet-point"><span class="highlight">포워딩 이전의 출력 버퍼는 모두 삭제</span>됩니다.</div>
+                        <div class="bullet-point">따라서 "여기는 from.jsp입니다."는 출력되지 않습니다.</div>
+                        <div class="bullet-point">to.jsp에서 request.getAttribute("name")으로 "홍길동"을 읽어 출력합니다.</div>
+                        <div class="bullet-point">최종 결과: <span class="highlight">여기는 to.jsp입니다. 홍길동</span></div>
+                        <div class="bullet-point" style="margin-top: 15px;">만약 sendRedirect()였다면 request 속성이 유지되지 않아 null이 출력됩니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
